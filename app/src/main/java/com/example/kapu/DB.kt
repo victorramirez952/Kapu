@@ -28,6 +28,7 @@ class DB(private val context: Context) {
     }
 
     private fun copyDatabase (dbFile : File) {
+        Log.d("Voltorn", "Copying new db")
         val dbPath = context.getDatabasePath("kapu.db").absolutePath
         if(!File(dbPath).exists()) {
             try {
