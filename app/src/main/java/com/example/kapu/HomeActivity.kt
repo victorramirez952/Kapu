@@ -5,16 +5,15 @@ import android.os.Bundle
 import android.util.Log
 
 class HomeActivity : AppCompatActivity() {
-    private val TAG = "HomeActivity"
     private var db:DB? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         db = DB(this)
-        getData()
+//        getData()
     }
 
-    private fun getData(){
+ /*   private fun getData(){
         try {
             val sqlQuery = "SELECT email FROM users"
             db?.FireQuery(sqlQuery)?.use {
@@ -30,5 +29,5 @@ class HomeActivity : AppCompatActivity() {
         } catch (e:Exception){
             e.printStackTrace()
         }
-    }
+    }*/
 }

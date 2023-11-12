@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <TextView
+        android:id="@+id/tv_login_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="20dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/ll_login"
+        app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <LinearLayout
+        android:id="@+id/ll_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/tv_without_account"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_header"
+        >
+
+        <EditText
+            android:id="@+id/et_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:text="user1@example.com"
+        />
+
+        <EditText
+            android:id="@+id/et_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:text="password1"
+        />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ingresar"
+        />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_without_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¿No tienes una cuenta?"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/btnOmega"
+            app:layout_constraintTop_toBottomOf="@id/ll_login"
+        />
+        <Button
+            android:id="@+id/btnOmega"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crea tu cuenta"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_without_account"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

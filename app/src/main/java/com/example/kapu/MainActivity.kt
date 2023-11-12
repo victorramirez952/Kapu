@@ -11,13 +11,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Toast.makeText(this, "Omega", Toast.LENGTH_SHORT).show()
-        Log.i("Voltorn", "Antes de DB(this)")
         db = DB(this)
-        Log.i("Voltorn", "db.openDatabase()")
         db?.openDatabase()
-        Log.i("Voltorn", "Finalizado")
-        openHomeActivity()
+        openLogin()
+        // openHomeActivity()
+    }
+
+    private fun openLogin(){
+        val intent = Intent(this, Login::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun openHomeActivity(){
