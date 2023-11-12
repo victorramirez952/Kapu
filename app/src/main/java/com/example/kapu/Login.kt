@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.example.kapu.databinding.ActivityLoginBinding
 
 class Login : AppCompatActivity() {
+    private lateinit var sessionManager: SessionManager
     private lateinit var binding:ActivityLoginBinding
     private lateinit var email: String
     private lateinit var password: String
@@ -17,6 +18,7 @@ class Login : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = DB(this)
+        sessionManager = SessionManager(this)
 
         binding.btnLogin.setOnClickListener {
             email = binding.etLoginEmail.text.toString().trim()
@@ -24,15 +26,15 @@ class Login : AppCompatActivity() {
             if(email.isEmpty() || password.isEmpty()){
                 Toast.makeText(this, "Ingresa nombre y contraseña", Toast.LENGTH_SHORT).show()
             } else {
-                Log.d("Voltorn", "Validando usuario")
                 val user = db?.CheckUser(email, password)
                 if(user != null){
                     Toast.makeText(this, "Bienvenido ${user.first_name} ${user.last_name}", Toast.LENGTH_SHORT).show()
+                    sessionManager.setLogin(true)
+                    sessionManager.setUserEmail(email)
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else{
-                    Log.d("Voltorn", "Hubo un error")
                     Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                 }
             }

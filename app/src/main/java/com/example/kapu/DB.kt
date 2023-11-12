@@ -17,14 +17,11 @@ class DB(private val context: Context) {
 
     fun openDatabase(): SQLiteDatabase{
         val dbFile = context.getDatabasePath(DB_NAME)
-        Log.i("Voltorn", "Abriendo try")
         try {
             val checkDB = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
             checkDB.close()
-            Log.i("Voltorn", "Base de datos comprobada")
             copyDatabase(dbFile)
         } catch (e: Exception) {
-            Log.i("Voltorn", "Parace que hubo un error")
             e.printStackTrace()
         }
         return SQLiteDatabase.openDatabase(dbFile.path, null, SQLiteDatabase.OPEN_READWRITE)
@@ -48,8 +45,7 @@ class DB(private val context: Context) {
                 e.printStackTrace()
             }
         }
-        Log.i("Voltorn", "completed")
-    }
+   }
 
     /*@Throws(SQLException::class)
     fun FireQuery(query:String): Cursor? {
@@ -57,13 +53,11 @@ class DB(private val context: Context) {
         val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
         try {
             TempCursor = database.rawQuery(query, null)
-            Log.d("Voltorn", "Estamos antes de recorrer el cursor")
             if(TempCursor != null && TempCursor.count > 0){
                 if(TempCursor.moveToFirst()) return TempCursor
             }
         } catch (e:Exception){
             e.printStackTrace()
-            Log.d("Voltorn", "Hubo un error dentro del FireQuery")
         } finally {
             database?.close()
         }
@@ -77,7 +71,6 @@ class DB(private val context: Context) {
         try {
             val query = "SELECT * FROM users WHERE email='$email' AND password='$password'"
             TempCursor = database.rawQuery(query, null)
-            Log.d("Voltorn", "Estamos antes de recorrer el cursor de CheckUser")
             if (TempCursor != null && TempCursor.moveToFirst()) {
                 val idUser = TempCursor.getInt(TempCursor.getColumnIndexOrThrow("id_user"))
                 val email = TempCursor.getString(TempCursor.getColumnIndexOrThrow("email"))
@@ -92,7 +85,6 @@ class DB(private val context: Context) {
             }
         } catch (e:Exception){
             e.printStackTrace()
-            Log.d("Voltorn", "Hubo un error dentro del FireQuery")
         } finally {
             TempCursor?.close()
             database?.close()
@@ -129,6 +121,33 @@ class DB(private val context: Context) {
                 return User(idUser, email, password, first_name, last_name, phone, collaborator)
             }
 
+        } catch (e:Exception){
+            e.printStackTrace()
+        } finally {
+            TempCursor?.close()
+            database?.close()
+        }
+        return null
+    }
+
+    @Throws(SQLException::class)
+    fun GetUser(email: String?): User? {
+        if(email == null) return null
+        var TempCursor: Cursor? = null
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+        try {
+            val query = "SELECT * FROM users WHERE email='$email'"
+            TempCursor = database.rawQuery(query, null)
+            if (TempCursor != null && TempCursor.moveToFirst()) {
+                val idUser = TempCursor.getInt(TempCursor.getColumnIndexOrThrow("id_user"))
+                val email = TempCursor.getString(TempCursor.getColumnIndexOrThrow("email"))
+                val password = TempCursor.getString(TempCursor.getColumnIndexOrThrow("password"))
+                val firstName = TempCursor.getString(TempCursor.getColumnIndexOrThrow("first_name"))
+                val lastName = TempCursor.getString(TempCursor.getColumnIndexOrThrow("last_name"))
+                val phone = TempCursor.getString(TempCursor.getColumnIndexOrThrow("phone"))
+                val collaborator = TempCursor.getInt(TempCursor.getColumnIndexOrThrow("collaborator")) == 1
+                return User(idUser, email, password, firstName, lastName, phone, collaborator)
+            }
         } catch (e:Exception){
             e.printStackTrace()
         } finally {
