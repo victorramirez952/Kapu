@@ -47,7 +47,7 @@ class DB(private val context: Context) {
         }
    }
 
-    /*@Throws(SQLException::class)
+    @Throws(SQLException::class)
     fun FireQuery(query:String): Cursor? {
         var TempCursor: Cursor? = null
         val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
@@ -57,12 +57,13 @@ class DB(private val context: Context) {
                 if(TempCursor.moveToFirst()) return TempCursor
             }
         } catch (e:Exception){
+            Log.d("Voltorn", "Error: ${e.message}", e)
             e.printStackTrace()
         } finally {
             database?.close()
         }
         return TempCursor
-    }*/
+    }
 
     @Throws(SQLException::class)
     fun CheckUser(email: String, password: String): User? {

@@ -28,6 +28,12 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        binding.btnHomeGoUsers.setOnClickListener {
+            val intent = Intent(this, UsersView::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun checkLogin(){

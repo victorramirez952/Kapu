@@ -35,4 +35,20 @@
         android:text="Logout"
     />
 
+    <TextView
+        android:id="@+id/tv_home_see_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="Ver usuarios"
+    />
+
+    <Button
+        android:id="@+id/btn_home_go_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Usuarios"
+    />
+
 </LinearLayout>
