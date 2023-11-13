@@ -158,4 +158,69 @@ class DB(private val context: Context) {
         }
         return null
     }
+
+    @Throws(SQLException::class)
+    fun EditUser(user: User): User? {
+        var tempCursor: Cursor? = null
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+        Log.d("Voltorn", "User: ${user}")
+
+        try {
+            val updateQuery = "UPDATE users SET " +
+                    "email = '${user.email}', " +
+                    "password = '${user.password}', " +
+                    "first_name = '${user.first_name}', " +
+                    "last_name = '${user.last_name}', " +
+                    "phone = '${user.phone}'," +
+                    "collaborator = '${user.collaborator}' "+
+                    "WHERE id_user = ${user.id_user}"
+
+            database.execSQL(updateQuery)
+
+            val updatedUserQuery = "SELECT * FROM users WHERE id_user=${user.id_user}"
+            tempCursor = database.rawQuery(updatedUserQuery, null)
+
+            if (tempCursor != null && tempCursor.moveToFirst()) {
+                val updatedIdUser = tempCursor.getInt(tempCursor.getColumnIndexOrThrow("id_user"))
+                val updatedCollaborator =
+                    tempCursor.getInt(tempCursor.getColumnIndexOrThrow("collaborator")) == 1
+                return User(
+                    updatedIdUser,
+                    user.email,
+                    user.password,
+                    user.first_name,
+                    user.last_name,
+                    user.phone,
+                    updatedCollaborator
+                )
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("Voltorn", "Error editing user: ${e.message}")
+        } finally {
+            tempCursor?.close()
+            database?.close()
+        }
+        return null
+    }
+
+    @Throws(SQLException::class)
+    fun DeleteUser(user: User): Boolean {
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+
+        try {
+            val deleteQuery = "DELETE FROM users WHERE id_user = ${user.id_user}"
+            database.execSQL(deleteQuery)
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("Voltorn", "Error deleting user: ${e.message}")
+        } finally {
+            database?.close()
+        }
+
+        return false
+    }
+
 }

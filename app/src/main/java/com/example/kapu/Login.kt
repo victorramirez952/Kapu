@@ -44,4 +44,13 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        if(sessionManager.isLogin() == true){
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
 }

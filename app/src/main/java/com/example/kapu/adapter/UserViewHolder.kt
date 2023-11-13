@@ -3,11 +3,16 @@ package com.example.kapu.adapter
 import android.content.DialogInterface.OnClickListener
 import android.text.Editable
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kapu.User
 import com.example.kapu.databinding.UserLayoutBinding
 
-class UserViewHolder(view: View):RecyclerView.ViewHolder(view) {
+class UserViewHolder(
+    private val view: View,
+    private val onItemEditClicked: (User) -> Unit,
+    private val onItemDeleteClicked: (User) -> Unit
+):RecyclerView.ViewHolder(view) {
     val binding = UserLayoutBinding.bind(view)
     fun render(userModel: User, onClickListener: (User) -> Unit){
         binding.tvUserEmail.setText(userModel.email)
@@ -16,6 +21,24 @@ class UserViewHolder(view: View):RecyclerView.ViewHolder(view) {
         binding.tvUserLastName.setText(userModel.last_name)
         binding.tvUserPhone.setText(userModel.phone)
         // Glide.with(binding.ivUser.context).load(userModel.img_profile).into(binding.ivUser)
-        itemView.setOnClickListener{ onClickListener(userModel) }
+        // itemView.setOnClickListener{ onClickListener(userModel) }
+
+        binding.btnEdit.setOnClickListener {
+            val email = binding.tvUserEmail.text.toString().trim()
+            val password = binding.tvUserPassword.text.toString().trim()
+            val first_name = binding.tvUserFirstName.text.toString().trim()
+            val last_name = binding.tvUserLastName.text.toString().trim()
+            val phone = binding.tvUserPhone.text.toString().trim()
+            if(email.isEmpty() || password.isEmpty() || first_name.isEmpty() || last_name.isEmpty() || phone.isEmpty()){
+                Toast.makeText(view.context, "Ingresa correctamente los datos", Toast.LENGTH_SHORT).show()
+            } else {
+                var user = User(userModel.id_user, email, password, first_name, last_name, phone, false)
+                onItemEditClicked(user)
+            }
+        }
+
+        binding.btnDelete.setOnClickListener {
+            onItemDeleteClicked(userModel)
+        }
     }
 }

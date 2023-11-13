@@ -1,5 +1,6 @@
 package com.example.kapu
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -43,9 +44,12 @@ class UsersView : AppCompatActivity() {
                         userList.add(user)
 
                     } while (it.moveToNext())
-                    binding.rvUsers.adapter = UserAdapter(userList) { user ->
-                        onItemSelected(user)
-                    }
+                    val userAdapter = UserAdapter(userList,
+                        onItemSelected = { user -> onItemSelected(user) },
+                        onItemEditClicked = { user -> onItemEditClicked(user) },
+                        onItemDeleteClicked = { user -> onItemDeleteClicked(user) }
+                    )
+                    binding.rvUsers.adapter = userAdapter
                 }
             }
         } catch (e:Exception){
@@ -56,5 +60,24 @@ class UsersView : AppCompatActivity() {
 
     fun onItemSelected(user: User){
         Toast.makeText(this, user.first_name + " " + user.last_name, Toast.LENGTH_SHORT).show()
+    }
+
+
+    fun onItemEditClicked(user: User){
+        var auxUser = db?.EditUser(user)
+        if(auxUser != null){
+            Toast.makeText(this, "Usuario ${user.first_name} ${user.last_name} registrado", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "No se pudo editar los datos", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun onItemDeleteClicked(user: User){
+        var auxUser = db?.DeleteUser(user)
+        if(auxUser != null){
+            Toast.makeText(this, "Usuario ${user.first_name} ${user.last_name} eliminado", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "No se pudo eliminar el usuario", Toast.LENGTH_SHORT).show()
+        }
     }
 }

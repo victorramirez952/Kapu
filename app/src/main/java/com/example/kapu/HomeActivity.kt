@@ -36,6 +36,11 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        checkLogin()
+    }
+
     private fun checkLogin(){
         if(sessionManager.isLogin() == false){
             val intent = Intent(this, Login::class.java)

@@ -10,6 +10,7 @@ import com.example.kapu.databinding.ActivitySignUpBinding
 
 class SignUp : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
+    private lateinit var sessionManager: SessionManager
     private lateinit var email: String
     private lateinit var password: String
     private lateinit var first_name: String
@@ -21,6 +22,7 @@ class SignUp : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = DB(this)
+        sessionManager = SessionManager(this)
 
         binding.btnSignup.setOnClickListener {
             email = binding.etSignupEmail.text.toString().trim()
@@ -45,6 +47,15 @@ class SignUp : AppCompatActivity() {
         binding.btnToLogin.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(sessionManager.isLogin() == true){
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
