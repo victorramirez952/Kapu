@@ -16,7 +16,7 @@ class UserProfile : Fragment() {
     private lateinit var binding: FragmentUserProfileBinding
     private lateinit var sessionManager: SessionManager
     private var db:DB? = null
-
+    private var currentUser: User? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -56,6 +56,13 @@ class UserProfile : Fragment() {
                 .replace(R.id.upper_fragment, EditProfile())
                 .addToBackStack(null)
                 .commit()
+        }
+        if(currentUser?.collaborator == false){
+            binding.tvMyParticipations.visibility = View.VISIBLE
+            binding.rvMyParticipations.visibility = View.VISIBLE
+        } else {
+            binding.tvMyParticipations.visibility = View.GONE
+            binding.rvMyParticipations.visibility = View.GONE
         }
         return binding.root
     }

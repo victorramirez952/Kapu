@@ -40,11 +40,11 @@ class Donations : Fragment() {
                 .commit()
         }
         if(currentUser?.collaborator == false){
-            binding.btnEditDesc.visibility = View.GONE
+            binding.btnEditOng.visibility = View.GONE
             binding.btnAddDonation.visibility = View.GONE
         } else {
-            binding.btnEditDesc.visibility = View.VISIBLE
-            binding.btnEditDesc.setOnClickListener{
+            binding.btnEditOng.visibility = View.VISIBLE
+            binding.btnEditOng.setOnClickListener{
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.upper_fragment, EditOngDesc())
                     .addToBackStack(null)

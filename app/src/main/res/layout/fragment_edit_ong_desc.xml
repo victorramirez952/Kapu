@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-    >
+        >
 
         <TextView
             android:id="@+id/tv_header"
@@ -18,7 +18,7 @@
             android:text="Kapu"
             android:textSize="20dp"
             android:gravity="center"
-        />
+            />
 
         <TextView
             android:id="@+id/tv_edit_description"
@@ -27,40 +27,17 @@
             android:text="Editar descripcion"
             android:textSize="20dp"
             android:gravity="center"
-        />
+            />
 
-
-        <!--    Editar nombre ONG -->
-        <LinearLayout
-            android:id="@+id/row_edit_title"
+        <TextView
+            android:id="@+id/tv_name_ong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:padding="10dp"
-            >
+            android:text="Nombre ONG"
+            android:textSize="20dp"
+            android:gravity="center"
+            />
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre ONG:"
-                android:gravity="center"
-                />
-
-            <EditText
-                android:id="@+id/et_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Titulo"
-                android:inputType="text"
-                android:minHeight="48dp" />
-
-        </LinearLayout>
 
         <!--    Editar descripcion ONG -->
         <LinearLayout
@@ -95,9 +72,10 @@
 
         </LinearLayout>
 
-<!--        Botones cancelar o editar -->
+
+        <!--        Botones cancelar o editar -->
         <LinearLayout
-            android:id="@+id/ll_btns_edit_donation"
+            android:id="@+id/ll_btns_edit_ong_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">

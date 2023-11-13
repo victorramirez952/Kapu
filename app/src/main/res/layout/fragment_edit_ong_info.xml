@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditOngDesc">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kapu"
+            android:textSize="20dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/tv_edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Editar info ONG"
+            android:textSize="20dp"
+            android:gravity="center"
+            />
+
+
+        <!--    Editar nombre ONG -->
+        <LinearLayout
+            android:id="@+id/row_edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre ONG:"
+                android:gravity="center"
+                />
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Titulo"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+        </LinearLayout>
+
+        <!--    Editar email ONG -->
+        <LinearLayout
+            android:id="@+id/row_edit_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email ONG:"
+                android:gravity="center"
+                />
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+        </LinearLayout>
+
+        <!--    Editar phone ONG -->
+        <LinearLayout
+            android:id="@+id/row_edit_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone ONG:"
+                android:gravity="center"
+                />
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+        </LinearLayout>
+
+        <!--    Editar dirección ONG -->
+        <LinearLayout
+            android:id="@+id/row_edit_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección:"
+                android:gravity="center"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:ems="10"
+                android:gravity="left|top"
+                android:hint="Dirección"
+                android:inputType="textMultiLine"
+                android:textSize="15sp">
+                <requestFocus />
+            </EditText>
+
+        </LinearLayout>
+
+
+        <!--        Botones cancelar o editar -->
+        <LinearLayout
+            android:id="@+id/ll_btns_edit_ong_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Cancelar" />
+
+            <Button
+                android:id="@+id/btn_save_changes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Guardar cambios" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

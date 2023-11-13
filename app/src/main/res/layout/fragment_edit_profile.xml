@@ -224,6 +224,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_ask_for_collaborator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
