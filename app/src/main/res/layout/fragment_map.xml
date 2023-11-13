@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/FragmentMap"
+    tools:context=".Map">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/tv_map_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kapu"
+        android:textSize="20dp"
+        android:gravity="center"
+    />
+
+    <TextView
+        android:id="@+id/tv_map_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Buscar"
+        android:textSize="20dp"
+        android:gravity="left"
+    />
+
+    <EditText
+        android:id="@+id/et_map_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Animales"
+    />
+
+    <TextView
+        android:id="@+id/tv_home_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Home Activity"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/tv_home_testing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre de usuario"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        />
+
+    <TextView
+        android:id="@+id/tv_home_see_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="Ver usuarios"
+        />
+
+    <Button
+        android:id="@+id/btn_home_go_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Usuarios"
+        />
+
+</LinearLayout>

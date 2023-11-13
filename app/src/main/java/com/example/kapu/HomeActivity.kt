@@ -19,19 +19,11 @@ class HomeActivity : AppCompatActivity() {
         db = DB(this)
         sessionManager = SessionManager(this)
         checkLogin()
-//        getData()
-
-
-        binding.btnLogout.setOnClickListener {
-            sessionManager.removeData()
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        binding.btnHomeGoUsers.setOnClickListener {
-            val intent = Intent(this, UsersView::class.java)
-            startActivity(intent)
+        if(savedInstanceState == null){
+            supportFragmentManager.beginTransaction()
+                .add(R.id.upper_fragment, Map())
+                .add(R.id.lower_fragment, Menu())
+                .commit()
         }
 
     }
@@ -50,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
             var currentUser = db?.GetUser(sessionManager.getUserEmail())
             if(currentUser != null){
                 val fullName = currentUser?.first_name + " " + currentUser?.last_name
-                binding.tvHomeTesting.text = "Welcome, $fullName"
+//                binding.tvHomeTesting.text = "Welcome, $fullName"
             } else{
                 Toast.makeText(this, "Hubo un error en la busqueda de informacion", Toast.LENGTH_SHORT).show()
             }
