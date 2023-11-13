@@ -67,6 +67,7 @@ class UsersView : AppCompatActivity() {
         var auxUser = db?.EditUser(user)
         if(auxUser != null){
             Toast.makeText(this, "Usuario ${user.first_name} ${user.last_name} registrado", Toast.LENGTH_SHORT).show()
+            initRecyclerView()
         } else {
             Toast.makeText(this, "No se pudo editar los datos", Toast.LENGTH_SHORT).show()
         }
@@ -76,6 +77,7 @@ class UsersView : AppCompatActivity() {
         var auxUser = db?.DeleteUser(user)
         if(auxUser != null){
             Toast.makeText(this, "Usuario ${user.first_name} ${user.last_name} eliminado", Toast.LENGTH_SHORT).show()
+            initRecyclerView()
         } else {
             Toast.makeText(this, "No se pudo eliminar el usuario", Toast.LENGTH_SHORT).show()
         }

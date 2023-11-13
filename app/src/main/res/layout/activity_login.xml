@@ -24,6 +24,7 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/tv_without_account"
         app:layout_constraintTop_toBottomOf="@id/tv_login_header"
+        android:padding="10dp"
         >
 
         <EditText
