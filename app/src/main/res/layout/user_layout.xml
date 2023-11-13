@@ -29,12 +29,6 @@
             android:text="email"
         />
 
-        <EditText
-            android:id="@+id/tv_user_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="password"
-            />
 
         <EditText
             android:id="@+id/tv_user_first_name"
@@ -57,6 +51,34 @@
             android:layout_height="wrap_content"
             android:text="phone"
         />
+
+        <EditText
+            android:id="@+id/tv_user_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="password"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <CheckBox
+                android:id="@+id/cb_collaborator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Collaborator"
+                android:layout_gravity="center"
+                />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

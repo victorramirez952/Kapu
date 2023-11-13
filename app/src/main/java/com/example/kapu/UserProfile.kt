@@ -35,8 +35,10 @@ class UserProfile : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         sessionManager = SessionManager(context)
-        binding.etPhone.isEnabled = false
         binding.etEmail.isEnabled = false
+        binding.etFirstName.isEnabled = false
+        binding.etLastName.isEnabled = false
+        binding.etPhone.isEnabled = false
         binding.etPassword.isEnabled = false
         db = DB(requireContext())
         binding.btnLogout.setOnClickListener {

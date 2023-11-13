@@ -20,10 +20,18 @@ class HomeActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
         checkLogin()
         if(savedInstanceState == null){
-            supportFragmentManager.beginTransaction()
-                .add(R.id.upper_fragment, Map())
-                .add(R.id.lower_fragment, Menu())
-                .commit()
+            if(currentUser?.collaborator == false){
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.upper_fragment, Map())
+                    .add(R.id.lower_fragment, Menu())
+                    .commit()
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.upper_fragment, Map())
+                    .add(R.id.lower_fragment, Menu())
+                    .commit()
+            }
+
         }
 
     }
@@ -39,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
-            var currentUser = db?.GetUser(sessionManager.getUserEmail())
+            currentUser = db?.GetUser(sessionManager.getUserEmail())
             if(currentUser != null){
                 val fullName = currentUser?.first_name + " " + currentUser?.last_name
 //                binding.tvHomeTesting.text = "Welcome, $fullName"

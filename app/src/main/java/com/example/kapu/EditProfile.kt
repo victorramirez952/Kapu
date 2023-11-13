@@ -39,6 +39,9 @@ class EditProfile : Fragment() {
         binding.btnSaveChanges.setOnClickListener {
             Toast.makeText(context, "Testing: Has editado tu cuenta", Toast.LENGTH_SHORT).show()
         }
+        binding.btnAskForCollaborator.setOnClickListener {
+            Toast.makeText(context, "Testing: Has solicitado ser colaborador", Toast.LENGTH_SHORT).show()
+        }
         binding.btnDeleteAccount.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.upper_fragment, DeleteAccount())

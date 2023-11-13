@@ -172,7 +172,7 @@ class DB(private val context: Context) {
                     "first_name = '${user.first_name}', " +
                     "last_name = '${user.last_name}', " +
                     "phone = '${user.phone}'," +
-                    "collaborator = '${user.collaborator}' "+
+                    "collaborator = ${user.collaborator} "+
                     "WHERE id_user = ${user.id_user}"
 
             database.execSQL(updateQuery)

@@ -2,6 +2,7 @@ package com.example.kapu.adapter
 
 import android.content.DialogInterface.OnClickListener
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ class UserViewHolder(
         binding.tvUserFirstName.setText(userModel.first_name)
         binding.tvUserLastName.setText(userModel.last_name)
         binding.tvUserPhone.setText(userModel.phone)
+        binding.cbCollaborator.isChecked = userModel.collaborator
         // Glide.with(binding.ivUser.context).load(userModel.img_profile).into(binding.ivUser)
         // itemView.setOnClickListener{ onClickListener(userModel) }
 
@@ -29,10 +31,11 @@ class UserViewHolder(
             val first_name = binding.tvUserFirstName.text.toString().trim()
             val last_name = binding.tvUserLastName.text.toString().trim()
             val phone = binding.tvUserPhone.text.toString().trim()
+            val collaborator = binding.cbCollaborator.isChecked
             if(email.isEmpty() || password.isEmpty() || first_name.isEmpty() || last_name.isEmpty() || phone.isEmpty()){
                 Toast.makeText(view.context, "Ingresa correctamente los datos", Toast.LENGTH_SHORT).show()
             } else {
-                var user = User(userModel.id_user, email, password, first_name, last_name, phone, false)
+                var user = User(userModel.id_user, email, password, first_name, last_name, phone, collaborator)
                 onItemEditClicked(user)
             }
         }

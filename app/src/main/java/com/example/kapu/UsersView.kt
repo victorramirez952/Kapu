@@ -38,6 +38,7 @@ class UsersView : AppCompatActivity() {
                         var firstName = it.getString(it.getColumnIndexOrThrow("first_name"))
                         var lastName = it.getString(it.getColumnIndexOrThrow("last_name"))
                         var phone = it.getString(it.getColumnIndexOrThrow("phone"))
+                        Log.d("Voltorn", "Boolean for ${email} is: ${it.getInt(it.getColumnIndexOrThrow("collaborator")) == 1}")
                         var collaborator = it.getInt(it.getColumnIndexOrThrow("collaborator")) == 1
 
                         var user = User(id, email, password, firstName, lastName, phone, collaborator)
@@ -65,8 +66,9 @@ class UsersView : AppCompatActivity() {
 
     fun onItemEditClicked(user: User){
         var auxUser = db?.EditUser(user)
+        Log.d("Voltorn", "User agarrado: ${auxUser}")
         if(auxUser != null){
-            Toast.makeText(this, "Usuario ${user.first_name} ${user.last_name} registrado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Usuario ${user.first_name} ${user.last_name} editado", Toast.LENGTH_SHORT).show()
             initRecyclerView()
         } else {
             Toast.makeText(this, "No se pudo editar los datos", Toast.LENGTH_SHORT).show()
