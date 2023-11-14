@@ -8,12 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kapu.adapter.OngAdapter
+import com.example.kapu.adapter.UserAdapter
 import com.example.kapu.databinding.FragmentMapBinding
 
 class Map : Fragment() {
     private lateinit var binding: FragmentMapBinding
     private lateinit var sessionManager: SessionManager
     private var db:DB? = null
+    private var currentUser: User? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -24,6 +29,8 @@ class Map : Fragment() {
     override fun onStart() {
         super.onStart()
         checkLogin()
+        initRecyclerView()
+        Log.d("Voltorn", "Iniciando sesion")
     }
 
     override fun onCreateView(
@@ -33,7 +40,6 @@ class Map : Fragment() {
         binding = FragmentMapBinding.inflate(inflater, container, false)
         sessionManager = SessionManager(context)
         db = DB(requireContext())
-        // val view = inflater.inflate(R.layout.fragment_map, container, false)
         binding.btnLogout.setOnClickListener {
             try {
                 sessionManager.removeData()
@@ -45,7 +51,6 @@ class Map : Fragment() {
             }
 
         }
-
         binding.btnHomeGoUsers.setOnClickListener {
             val intent = Intent(context, UsersView::class.java)
             startActivity(intent)
@@ -54,19 +59,68 @@ class Map : Fragment() {
     }
 
     private fun checkLogin(){
-        if(sessionManager.isLogin() == false){
-            val intent = Intent(context, Login::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        } else {
-            var currentUser = db?.GetUser(sessionManager.getUserEmail())
-            if(currentUser != null){
-                val fullName = currentUser?.first_name + " " + currentUser?.last_name
-                binding.tvHomeTesting.text = "Welcome, $fullName"
-            } else{
-                Toast.makeText(context, "Hubo un error en la busqueda de informacion", Toast.LENGTH_SHORT).show()
+        try{
+            if(sessionManager.isLogin() == false){
+                val intent = Intent(context, Login::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            } else {
+                var currentUser = db?.GetUser(sessionManager.getUserEmail())
+                if(currentUser != null){
+                    val fullName = currentUser?.first_name + " " + currentUser?.last_name
+                    binding.tvHomeTesting.text = "Welcome, $fullName"
+                } else{
+                    Toast.makeText(context, "Hubo un error en la busqueda de informacion", Toast.LENGTH_SHORT).show()
+                }
             }
+        } catch (e:Exception){
+            Log.d("Voltorn", "Error: ${e.message}")
         }
+
+    }
+
+    private fun initRecyclerView(){
+        val manager = LinearLayoutManager(requireContext())
+        val decoration = DividerItemDecoration(requireContext(), manager.orientation)
+        binding.rvOngs.layoutManager = LinearLayoutManager(requireContext())
+        Log.d("Voltorn", "Mensaje antes de hacer el query")
+        try {
+            val query = "SELECT * FROM ongs"
+            db?.FireQuery(query)?.use {
+                if (it.count > 0) {
+                    val ongList = mutableListOf<Ong>()
+                    do {
+                        var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
+                        var name = it.getString(it.getColumnIndexOrThrow("name"))
+                        var description = it.getString(it.getColumnIndexOrThrow("description"))
+                        var address = it.getString(it.getColumnIndexOrThrow("address"))
+                        var phone = it.getString(it.getColumnIndexOrThrow("phone"))
+                        var email = it.getString(it.getColumnIndexOrThrow("email"))
+                        var id_user = it.getInt(it.getColumnIndexOrThrow("id_user"))
+
+                        var ong = Ong(id_ong, name, description, address, phone, email, id_user)
+                        ongList.add(ong)
+
+                    } while (it.moveToNext())
+                    val ongAdapter = OngAdapter(ongList,
+                        onItemSelected = { ong -> onItemSelected(ong) }
+                    )
+                    Log.d("Voltorn", "Exito when ongAdapter")
+                    binding.rvOngs.adapter = ongAdapter
+                }
+            }
+        } catch (e:Exception){
+            Log.d("Error", "Error: ${e.message}", e)
+        }
+        binding.rvOngs.addItemDecoration(decoration)
+    }
+
+    fun onItemSelected(ong: Ong){
+        sessionManager.setOng(ong.id_ong)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.upper_fragment, Donations())
+            .addToBackStack(null)
+            .commit()
     }
 
 //    companion object {

@@ -1,6 +1,8 @@
 package com.example.kapu
 
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ class EditOngDesc : Fragment() {
     private lateinit var binding: FragmentEditOngDescBinding
     private lateinit var sessionManager: SessionManager
     private var db:DB? = null
+    private var currentOng: Ong? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -26,6 +29,8 @@ class EditOngDesc : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentEditOngDescBinding.inflate(inflater, container, false)
+        db = DB(requireContext())
+        sessionManager = SessionManager(context)
         binding.btnCancel.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.upper_fragment, Donations())
@@ -39,17 +44,31 @@ class EditOngDesc : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+         Log.d("Voltorn", "Ong id: ${sessionManager.getOngId()}")
         return binding.root
     }
 
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            EditOngDesc().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
+    override fun onStart() {
+        super.onStart()
+        getOng()
+    }
+    private fun getOng(){
+        try {
+            currentOng = db?.GetOng(sessionManager.getOngId())
+
+            Log.d("Voltorn", "Current ong: ${currentOng}")
+            if(currentOng == null) {
+                Toast.makeText(
+                    context,
+                    "Un error en informacion buscada, parece haber",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                binding.tvNameOng.text = currentOng?.name
+                binding.etDescription.text = Editable.Factory.getInstance().newEditable(currentOng?.description ?: "")
+            }
+        } catch (e:Exception){
+            Log.d("Voltorn", "Error: ${e.message}")
+        }
+    }
 }

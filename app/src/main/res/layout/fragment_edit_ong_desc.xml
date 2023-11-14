@@ -60,6 +60,7 @@
                 />
 
             <EditText
+                android:id="@+id/et_Description"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:ems="10"

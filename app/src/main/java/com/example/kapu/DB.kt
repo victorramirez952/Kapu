@@ -223,4 +223,32 @@ class DB(private val context: Context) {
         return false
     }
 
+    @Throws(SQLException::class)
+    fun GetOng(id_ong: Int?): Ong? {
+        if(id_ong == null) return null
+        var TempCursor: Cursor? = null
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+        try {
+            val query = "SELECT * FROM ongs WHERE id_ong=${id_ong}"
+            TempCursor = database.rawQuery(query, null)
+            if (TempCursor != null && TempCursor.moveToFirst()) {
+                val id_ong = TempCursor.getInt(TempCursor.getColumnIndexOrThrow("id_ong"))
+                val name = TempCursor.getString(TempCursor.getColumnIndexOrThrow("name"))
+                val description = TempCursor.getString(TempCursor.getColumnIndexOrThrow("description"))
+                val address = TempCursor.getString(TempCursor.getColumnIndexOrThrow("address"))
+                val phone = TempCursor.getString(TempCursor.getColumnIndexOrThrow("phone"))
+                val email = TempCursor.getString(TempCursor.getColumnIndexOrThrow("email"))
+                val id_user = TempCursor.getInt(TempCursor.getColumnIndexOrThrow("id_user"))
+                return Ong(id_ong, name, description, address, phone, email, id_user)
+            }
+        } catch (e:Exception){
+            Log.d("Voltorn", "Error: ${e.message}")
+            e.printStackTrace()
+        } finally {
+            TempCursor?.close()
+            database?.close()
+        }
+        return null
+    }
+
 }

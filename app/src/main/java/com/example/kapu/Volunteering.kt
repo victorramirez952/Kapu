@@ -16,6 +16,7 @@ class Volunteering : Fragment() {
     private lateinit var sessionManager: SessionManager
     private var db:DB? = null
     private var currentUser: User? = null
+    private var currentOng: Ong? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -67,6 +68,7 @@ class Volunteering : Fragment() {
     override fun onStart() {
         super.onStart()
         checkLogin()
+        getOng()
     }
 
     private fun checkLogin(){
@@ -90,14 +92,20 @@ class Volunteering : Fragment() {
         }
     }
 
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            Volunteering().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
+    private fun getOng(){
+        try {
+            currentOng = db?.GetOng(sessionManager.getOngId())
+            if(currentOng == null) {
+                Toast.makeText(
+                    context,
+                    "Un error en informacion buscada, parece haber",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                binding.tvNameOng.text = currentOng?.name
+            }
+        } catch (e:Exception){
+            Log.d("Voltorn", "Error: ${e.message}")
+        }
+    }
 }

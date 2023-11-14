@@ -7,6 +7,7 @@ class SessionManager(context: Context?) {
     val PRIVATE_MODE = 0
     val PREF_NAME = "SharedPreferences"
     val IS_LOGIN = "is_login"
+    val ONG_NAME = "ong_id"
 
     var pref: SharedPreferences? = context?.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
     var editor: SharedPreferences.Editor? = pref?.edit()
@@ -32,5 +33,14 @@ class SessionManager(context: Context?) {
     fun removeData(){
         editor?.clear()
         editor?.commit()
+    }
+
+    fun setOng(ongSetted: Int){
+        editor?.putInt(ONG_NAME, ongSetted)
+        editor?.commit()
+    }
+
+    fun getOngId(): Int? {
+        return pref?.getInt(ONG_NAME, 0)
     }
 }

@@ -21,7 +21,7 @@
             />
 
         <TextView
-            android:id="@+id/tv_edit_description"
+            android:id="@+id/tv_name_ong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Editar info ONG"
@@ -147,6 +147,7 @@
                 />
 
             <EditText
+                android:id="@+id/et_address"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:ems="10"

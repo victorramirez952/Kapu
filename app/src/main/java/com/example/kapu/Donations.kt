@@ -17,6 +17,7 @@ class Donations : Fragment() {
     private lateinit var sessionManager: SessionManager
     private var db:DB? = null
     private var currentUser: User? = null
+    private var currentOng: Ong? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -63,6 +64,7 @@ class Donations : Fragment() {
     override fun onStart() {
         super.onStart()
         checkLogin()
+        getOng()
     }
 
     private fun checkLogin(){
@@ -80,6 +82,23 @@ class Donations : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            }
+        } catch (e:Exception){
+            Log.d("Voltorn", "Error: ${e.message}")
+        }
+    }
+
+    private fun getOng(){
+        try {
+            currentOng = db?.GetOng(sessionManager.getOngId())
+            if(currentOng == null) {
+                Toast.makeText(
+                    context,
+                    "Un error en informacion buscada, parece haber",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                binding.tvNameOng.text = currentOng?.name
             }
         } catch (e:Exception){
             Log.d("Voltorn", "Error: ${e.message}")
