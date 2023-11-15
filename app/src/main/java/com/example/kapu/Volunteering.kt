@@ -8,6 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kapu.adapter.OngAdapter
+import com.example.kapu.adapter.VolunteeringAdapter
 import com.example.kapu.databinding.FragmentDonationsBinding
 import com.example.kapu.databinding.FragmentVolunteeringBinding
 
@@ -69,6 +73,7 @@ class Volunteering : Fragment() {
         super.onStart()
         checkLogin()
         getOng()
+        initRecyclerView()
     }
 
     private fun checkLogin(){
@@ -103,9 +108,62 @@ class Volunteering : Fragment() {
                 ).show()
             } else {
                 binding.tvNameOng.text = currentOng?.name
+                binding.tv2OngPhone.text = currentOng?.phone
+                binding.tv2OngEmail.text = currentOng?.email
+                binding.tv2OngAddress.text = currentOng?.address
             }
         } catch (e:Exception){
             Log.d("Voltorn", "Error: ${e.message}")
         }
+    }
+
+    private fun initRecyclerView(){
+        val manager = LinearLayoutManager(requireContext())
+        val decoration = DividerItemDecoration(requireContext(), manager.orientation)
+        binding.rvVolunteering.layoutManager = LinearLayoutManager(requireContext())
+        try {
+            val query = "SELECT * FROM volunteering WHERE id_ong=${currentOng?.id_ong}"
+            db?.FireQuery(query)?.use {
+                if (it.count > 0) {
+                    val volunteeringList = mutableListOf<VolunteeringClass>()
+                    do {
+                        var id_volunteering = it.getInt(it.getColumnIndexOrThrow("id_volunteering"))
+                        var title = it.getString(it.getColumnIndexOrThrow("title"))
+                        var startDate = it.getString(it.getColumnIndexOrThrow("startDate"))
+                        var endDate = it.getString(it.getColumnIndexOrThrow("endDate"))
+                        var startTime = it.getString(it.getColumnIndexOrThrow("startTime"))
+                        var endTime = it.getString(it.getColumnIndexOrThrow("endTime"))
+                        var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
+
+                        var volunteering = VolunteeringClass(id_volunteering, title, startDate, endDate, startTime, endTime, id_ong)
+                        volunteeringList.add(volunteering)
+
+                    } while (it.moveToNext())
+                    val volunteeringAdapter = VolunteeringAdapter(volunteeringList,
+                        currentUser,
+                        onItemSelected = { volunteering -> onItemSelected(volunteering) },
+                        onEditItem = { volunteering -> onEditItem(volunteering) },
+                        onDeleteItem = { volunteering -> onDeleteItem(volunteering) }
+                    )
+                    Log.d("Voltorn", "Exito when volunteeringAdapter")
+                    binding.rvVolunteering.adapter = volunteeringAdapter
+                }
+            }
+        } catch (e:Exception){
+            Log.d("Error", "Error: ${e.message}", e)
+        }
+        binding.rvVolunteering.addItemDecoration(decoration)
+    }
+
+    fun onItemSelected(volunteering: VolunteeringClass){
+        Toast.makeText(requireContext(), volunteering.title, Toast.LENGTH_SHORT).show()
+    }
+
+    fun onEditItem(volunteering: VolunteeringClass) {
+        Toast.makeText(requireContext(), "Editando ${volunteering.title}", Toast.LENGTH_SHORT).show()
+    }
+
+    fun onDeleteItem(volunteering: VolunteeringClass) {
+        Toast.makeText(requireContext(), "Eliminando ${volunteering.title}", Toast.LENGTH_SHORT).show()
     }
 }

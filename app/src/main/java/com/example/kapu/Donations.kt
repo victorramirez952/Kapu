@@ -9,13 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kapu.adapter.DonationAdapter
+import com.example.kapu.adapter.OngAdapter
 import com.example.kapu.databinding.FragmentDonationsBinding
 import com.example.kapu.databinding.FragmentMapBinding
 
 class Donations : Fragment() {
     private lateinit var binding: FragmentDonationsBinding
     private lateinit var sessionManager: SessionManager
-    private var db:DB? = null
+    private var db: DB? = null
     private var currentUser: User? = null
     private var currentOng: Ong? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,18 +44,18 @@ class Donations : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-        if(currentUser?.collaborator == false){
+        if (currentUser?.collaborator == false) {
             binding.btnEditOng.visibility = View.GONE
             binding.btnAddDonation.visibility = View.GONE
         } else {
             binding.btnEditOng.visibility = View.VISIBLE
-            binding.btnEditOng.setOnClickListener{
+            binding.btnEditOng.setOnClickListener {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.upper_fragment, EditOngDesc())
                     .addToBackStack(null)
                     .commit()
             }
-            binding.btnAddDonation.setOnClickListener{
+            binding.btnAddDonation.setOnClickListener {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.upper_fragment, AddDonation())
                     .addToBackStack(null)
@@ -65,17 +69,18 @@ class Donations : Fragment() {
         super.onStart()
         checkLogin()
         getOng()
+        initRecyclerView()
     }
 
-    private fun checkLogin(){
+    private fun checkLogin() {
         try {
-            if(sessionManager.isLogin() == false){
+            if (sessionManager.isLogin() == false) {
                 val intent = Intent(context, Login::class.java)
                 startActivity(intent)
                 requireActivity().finish()
             } else {
                 currentUser = db?.GetUser(sessionManager.getUserEmail())
-                if(currentUser == null) {
+                if (currentUser == null) {
                     Toast.makeText(
                         context,
                         "Un error en informacion buscada, parece haber",
@@ -83,15 +88,50 @@ class Donations : Fragment() {
                     ).show()
                 }
             }
-        } catch (e:Exception){
+        } catch (e: Exception) {
             Log.d("Voltorn", "Error: ${e.message}")
         }
     }
 
-    private fun getOng(){
+    private fun initRecyclerView() {
+        val manager = LinearLayoutManager(requireContext())
+        val decoration = DividerItemDecoration(requireContext(), manager.orientation)
+        binding.rvDonations.layoutManager = LinearLayoutManager(requireContext())
+        try {
+            val query = "SELECT * FROM donations WHERE id_ong=${currentOng?.id_ong}"
+            db?.FireQuery(query)?.use {
+                if (it.count > 0) {
+                    val donationList = mutableListOf<Donation>()
+                    do {
+                        var id_donation = it.getInt(it.getColumnIndexOrThrow("id_donation"))
+                        var title = it.getString(it.getColumnIndexOrThrow("title"))
+                        // var imagen = it.getString(it.getColumnIndexOrThrow("image"))
+                        var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
+
+                        var donation = Donation(id_donation, title, id_ong)
+                        donationList.add(donation)
+
+                    } while (it.moveToNext())
+                    val donationAdapter = DonationAdapter(donationList,
+                        currentUser,
+                        onItemSelected = { donation -> onItemSelected(donation) },
+                        onEditItem = { donation -> onEditItem(donation) },
+                        onDeleteItem = { donation -> onDeleteItem(donation) }
+                    )
+                    Log.d("Voltorn", "Exito when donationAdapter")
+                    binding.rvDonations.adapter = donationAdapter
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("Error", "Error: ${e.message}", e)
+        }
+        binding.rvDonations.addItemDecoration(decoration)
+    }
+
+    private fun getOng() {
         try {
             currentOng = db?.GetOng(sessionManager.getOngId())
-            if(currentOng == null) {
+            if (currentOng == null) {
                 Toast.makeText(
                     context,
                     "Un error en informacion buscada, parece haber",
@@ -100,19 +140,20 @@ class Donations : Fragment() {
             } else {
                 binding.tvNameOng.text = currentOng?.name
             }
-        } catch (e:Exception){
+        } catch (e: Exception) {
             Log.d("Voltorn", "Error: ${e.message}")
         }
     }
 
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            Donations().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
+    fun onItemSelected(donation: Donation) {
+        Toast.makeText(requireContext(), donation.title, Toast.LENGTH_SHORT).show()
+    }
+
+    fun onEditItem(donation: Donation) {
+        Toast.makeText(requireContext(), "Editando ${donation.title}", Toast.LENGTH_SHORT).show()
+    }
+
+    fun onDeleteItem(donation: Donation) {
+        Toast.makeText(requireContext(), "Eliminando ${donation.title}", Toast.LENGTH_SHORT).show()
+    }
 }
