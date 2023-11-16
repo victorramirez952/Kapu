@@ -13,7 +13,8 @@ class VolunteeringAdapter(private val volunteeringList:List<VolunteeringClass>,
                           private val user: User?,
                       private val onItemSelected: (VolunteeringClass) -> Unit,
                           private val onEditItem: (VolunteeringClass) -> Unit,
-                          private val onDeleteItem: (VolunteeringClass) -> Unit
+                          private val onDeleteItem: (VolunteeringClass) -> Unit,
+                          private val weekdaysList:List<String>
 ): RecyclerView.Adapter<VolunteeringViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VolunteeringViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -23,7 +24,8 @@ class VolunteeringAdapter(private val volunteeringList:List<VolunteeringClass>,
 
     override fun onBindViewHolder(holder: VolunteeringViewHolder, position: Int) {
         val volunteering = volunteeringList[position]
-        holder.render(volunteering, user, onItemSelected)
+        val weekdaysString = weekdaysList[position]
+        holder.render(volunteering, user, weekdaysString, onItemSelected)
     }
 
     override fun getItemCount(): Int = volunteeringList.size

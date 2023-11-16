@@ -21,9 +21,10 @@ class VolunteeringViewHolder(
     private val onDeleteItem: (VolunteeringClass) -> Unit
 ):RecyclerView.ViewHolder(view) {
     val binding = VolunteeringLayoutBinding.bind(view)
-    fun render(volunteeringModel: VolunteeringClass, currentUser: User?, onItemSelected: (VolunteeringClass) -> Unit) {
+    fun render(volunteeringModel: VolunteeringClass, currentUser: User?, weekdaysString: String, onItemSelected: (VolunteeringClass) -> Unit) {
         binding.tvVolunteeringTitle.setText(volunteeringModel.title)
         binding.tvVolunteeringDate.setText(volunteeringModel.startDate + " - " + volunteeringModel.endDate)
+        binding.tvVolunteeringWeekdays.setText(weekdaysString)
         binding.tvStartTime.setText(volunteeringModel.startTime)
         binding.tvEndTime.setText(volunteeringModel.endTime)
         if(currentUser?.collaborator == true){
@@ -36,6 +37,7 @@ class VolunteeringViewHolder(
         itemView.setOnClickListener { onItemSelected(volunteeringModel) }
         binding.btnEdit.setOnClickListener {
             onEditItem(volunteeringModel)
+
         }
         binding.btnDelete.setOnClickListener {
             onDeleteItem(volunteeringModel)

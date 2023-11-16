@@ -125,6 +125,8 @@ class Volunteering : Fragment() {
             val query = "SELECT * FROM volunteering WHERE id_ong=${currentOng?.id_ong}"
             db?.FireQuery(query)?.use {
                 if (it.count > 0) {
+                    var weekdaysString: String
+                    val weekdaysList = mutableListOf<String>()
                     val volunteeringList = mutableListOf<VolunteeringClass>()
                     do {
                         var id_volunteering = it.getInt(it.getColumnIndexOrThrow("id_volunteering"))
@@ -134,6 +136,8 @@ class Volunteering : Fragment() {
                         var startTime = it.getString(it.getColumnIndexOrThrow("startTime"))
                         var endTime = it.getString(it.getColumnIndexOrThrow("endTime"))
                         var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
+                        val weekdaysString = getWeekdaysString(id_volunteering)
+                        weekdaysList.add(weekdaysString)
 
                         var volunteering = VolunteeringClass(id_volunteering, title, startDate, endDate, startTime, endTime, id_ong)
                         volunteeringList.add(volunteering)
@@ -143,9 +147,9 @@ class Volunteering : Fragment() {
                         currentUser,
                         onItemSelected = { volunteering -> onItemSelected(volunteering) },
                         onEditItem = { volunteering -> onEditItem(volunteering) },
-                        onDeleteItem = { volunteering -> onDeleteItem(volunteering) }
+                        onDeleteItem = { volunteering -> onDeleteItem(volunteering) },
+                        weekdaysList
                     )
-                    Log.d("Voltorn", "Exito when volunteeringAdapter")
                     binding.rvVolunteering.adapter = volunteeringAdapter
                 }
             }
@@ -155,15 +159,52 @@ class Volunteering : Fragment() {
         binding.rvVolunteering.addItemDecoration(decoration)
     }
 
+    private fun getWeekdaysString(idVolunteering: Int): String {
+        val queryDates = "SELECT * FROM volunteering_weekday WHERE id_volunteering=$idVolunteering"
+        val cursor = db?.FireQuery(queryDates)
+
+        val weekdaysMap = mapOf(
+            1 to "L", 2 to "M", 3 to "Mie", 4 to "J", 5 to "V", 6 to "S", 7 to "D"
+        )
+
+        val weekdaysList = mutableListOf<String>()
+
+        cursor?.use {
+            if (it.moveToFirst()) {
+                do {
+                    val idWeekday = it.getInt(it.getColumnIndexOrThrow("id_weekday"))
+                    weekdaysMap[idWeekday]?.let { weekdayString -> weekdaysList.add(weekdayString) }
+                } while (it.moveToNext())
+            }
+        }
+
+        val weekdaysString = weekdaysList.joinToString(separator = "")
+        return weekdaysString
+    }
+
     fun onItemSelected(volunteering: VolunteeringClass){
         Toast.makeText(requireContext(), volunteering.title, Toast.LENGTH_SHORT).show()
     }
 
     fun onEditItem(volunteering: VolunteeringClass) {
-        Toast.makeText(requireContext(), "Editando ${volunteering.title}", Toast.LENGTH_SHORT).show()
+        val editVolunteeringFragment = EditVolunteering()
+        val bundle = Bundle()
+        bundle.putInt("id_volunteering", volunteering.id_volunteering)
+        editVolunteeringFragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.upper_fragment, editVolunteeringFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     fun onDeleteItem(volunteering: VolunteeringClass) {
-        Toast.makeText(requireContext(), "Eliminando ${volunteering.title}", Toast.LENGTH_SHORT).show()
+        var result = db?.DeleteVolunteering(volunteering)
+        if(result != null){
+            Toast.makeText(context, "Volunteering ${volunteering.title} eliminado", Toast.LENGTH_SHORT).show()
+            initRecyclerView()
+        } else {
+            Toast.makeText(context, "No se pudo eliminar el usuario", Toast.LENGTH_SHORT).show()
+        }
     }
 }

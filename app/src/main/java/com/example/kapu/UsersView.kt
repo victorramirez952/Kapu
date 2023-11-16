@@ -66,7 +66,6 @@ class UsersView : AppCompatActivity() {
 
     fun onItemEditClicked(user: User){
         var auxUser = db?.EditUser(user)
-        Log.d("Voltorn", "User agarrado: ${auxUser}")
         if(auxUser != null){
             Toast.makeText(this, "Usuario ${user.first_name} ${user.last_name} editado", Toast.LENGTH_SHORT).show()
             initRecyclerView()

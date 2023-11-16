@@ -30,7 +30,6 @@ class Map : Fragment() {
         super.onStart()
         checkLogin()
         initRecyclerView()
-        Log.d("Voltorn", "Iniciando sesion")
     }
 
     override fun onCreateView(
@@ -83,7 +82,6 @@ class Map : Fragment() {
         val manager = LinearLayoutManager(requireContext())
         val decoration = DividerItemDecoration(requireContext(), manager.orientation)
         binding.rvOngs.layoutManager = LinearLayoutManager(requireContext())
-        Log.d("Voltorn", "Mensaje antes de hacer el query")
         try {
             val query = "SELECT * FROM ongs"
             db?.FireQuery(query)?.use {
@@ -105,12 +103,11 @@ class Map : Fragment() {
                     val ongAdapter = OngAdapter(ongList,
                         onItemSelected = { ong -> onItemSelected(ong) }
                     )
-                    Log.d("Voltorn", "Exito when ongAdapter")
                     binding.rvOngs.adapter = ongAdapter
                 }
             }
         } catch (e:Exception){
-            Log.d("Error", "Error: ${e.message}", e)
+            Log.d("Voltorn", "Error: ${e.message}", e)
         }
         binding.rvOngs.addItemDecoration(decoration)
     }
@@ -122,14 +119,4 @@ class Map : Fragment() {
             .addToBackStack(null)
             .commit()
     }
-
-//    companion object {
-//        fun newInstance(param1: String, param2: String) =
-//            Map().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
 }
