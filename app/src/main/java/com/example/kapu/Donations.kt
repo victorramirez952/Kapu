@@ -150,7 +150,16 @@ class Donations : Fragment() {
     }
 
     fun onEditItem(donation: Donation) {
-        Toast.makeText(requireContext(), "Editando ${donation.title}", Toast.LENGTH_SHORT).show()
+        val editDonationFragment = EditDonation()
+        val bundle = Bundle()
+        bundle.putInt("id_donation", donation.id_donation)
+        editDonationFragment.arguments = bundle
+        Log.d("Voltorn", "Editing: ${donation.title}")
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.upper_fragment, editDonationFragment)
+            .addToBackStack(null)
+            .commit()
+//        Toast.makeText(requireContext(), "Editando ${donation.title}", Toast.LENGTH_SHORT).show()
     }
 
     fun onDeleteItem(donation: Donation) {

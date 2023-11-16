@@ -308,7 +308,6 @@ class DB(private val context: Context) {
             val updatedVolunteeringQuery = "SELECT * FROM volunteering WHERE id_volunteering=${volunteering.id_volunteering}"
             database.rawQuery(updatedVolunteeringQuery, null).use { tempCursor ->
                 for ((index, value) in dayList.withIndex()) {
-                    Log.d("Voltorn", "Index: $index  Value: $value")
 
                     val existingQuery = "SELECT COUNT(*) FROM volunteering_weekday " +
                             "WHERE id_volunteering = ${volunteering.id_volunteering} " +
@@ -431,4 +430,61 @@ class DB(private val context: Context) {
         return false
     }
 
+    @Throws(SQLException::class)
+    fun GetDonation(id_donation: Int): Donation? {
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+        return try {
+            val query = "SELECT * FROM donations WHERE id_donation=${id_donation}"
+            database.rawQuery(query, null).use { tempCursor ->
+                tempCursor.moveToFirst()
+                val id_donation = tempCursor.getInt(tempCursor.getColumnIndexOrThrow("id_donation"))
+                val title = tempCursor.getString(tempCursor.getColumnIndexOrThrow("title"))
+                // val image = tempCursor.getString(tempCursor.getColumnIndexOrThrow("image"))
+                val id_ong = tempCursor.getInt(tempCursor.getColumnIndexOrThrow("id_ong"))
+                return Donation(
+                    id_donation,
+                    title,
+                    id_ong
+                )
+            }
+            null
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("Voltorn", "Error getting donation: ${e.message}")
+            null
+        } finally {
+            database?.close()
+        }
+    }
+
+    @Throws(SQLException::class)
+    fun EditDonation(donation: Donation): Donation? {
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+
+        return try {
+            val updateQuery = "UPDATE donations SET " +
+                    "title = '${donation.title}', " +
+                    "id_ong = '${donation.id_ong}'" +
+                    "WHERE id_donation = ${donation.id_donation}"
+
+            database.execSQL(updateQuery)
+
+            val updatedDonationQuery = "SELECT * FROM donations WHERE id_donation=${donation.id_donation}"
+            database.rawQuery(updatedDonationQuery, null).use { tempCursor ->
+                tempCursor?.takeIf { it.moveToFirst() }?.run {
+                    Donation(
+                        donation.id_donation,
+                        donation.title,
+                        donation.id_ong
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("Voltorn", "Error editing volunteering: ${e.message}")
+            null
+        } finally {
+            database?.close()
+        }
+    }
 }
