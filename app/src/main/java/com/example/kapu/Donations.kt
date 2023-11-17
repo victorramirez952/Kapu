@@ -163,6 +163,12 @@ class Donations : Fragment() {
     }
 
     fun onDeleteItem(donation: Donation) {
-        Toast.makeText(requireContext(), "Eliminando ${donation.title}", Toast.LENGTH_SHORT).show()
+        var result = db?.DeleteDonation(donation)
+        if(result != null){
+            Toast.makeText(context, "Volunteering ${donation.title} eliminado", Toast.LENGTH_SHORT).show()
+            initRecyclerView()
+        } else {
+            Toast.makeText(context, "No se pudo eliminar el usuario", Toast.LENGTH_SHORT).show()
+        }
     }
 }

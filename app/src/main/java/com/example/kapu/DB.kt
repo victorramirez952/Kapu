@@ -15,22 +15,16 @@ class DB(private val context: Context) {
         private val DB_NAME = "kapu.db"
     }
 
-    fun openDatabase(): SQLiteDatabase{
+    fun openDatabase(): SQLiteDatabase {
         val dbFile = context.getDatabasePath(DB_NAME)
-        try {
-            val checkDB = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
-            checkDB.close()
-            copyDatabase(dbFile)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        copyDatabase(dbFile)
         return SQLiteDatabase.openDatabase(dbFile.path, null, SQLiteDatabase.OPEN_READWRITE)
     }
 
-    private fun copyDatabase (dbFile : File) {
+    private fun copyDatabase(dbFile: File) {
         Log.d("Voltorn", "Copying new db")
-        val dbPath = context.getDatabasePath("kapu.db").absolutePath
-        if(!File(dbPath).exists()) {
+        val dbPath = context.getDatabasePath(DB_NAME).absolutePath
+        if (!File(dbPath).exists()) {
             try {
                 val openDB = context.assets.open(DB_NAME)
                 val outputStream = FileOutputStream(dbFile)
@@ -42,11 +36,11 @@ class DB(private val context: Context) {
                 outputStream.flush()
                 outputStream.close()
                 openDB.close()
-            } catch (e:IOException){
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
-   }
+    }
 
     @Throws(SQLException::class)
     fun FireQuery(query:String): Cursor? {
@@ -486,5 +480,59 @@ class DB(private val context: Context) {
         } finally {
             database?.close()
         }
+    }
+
+    @Throws(SQLException::class)
+    fun AddDonation(donation: Donation): Donation? {
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+
+        return try {
+            val insertQuery = "INSERT INTO donations (title, id_ong) " +
+                    "VALUES (?, ?)"
+
+            val insertStatement = database.compileStatement(insertQuery)
+            insertStatement.bindString(1, donation.title)
+            insertStatement.bindLong(2, donation.id_ong.toLong())
+
+            val insertedRowId = insertStatement.executeInsert()
+            insertStatement.close()
+
+            if (insertedRowId != -1L) {
+                val newDonationQuery = "SELECT * FROM donations WHERE id_donation=$insertedRowId"
+                database.rawQuery(newDonationQuery, null).use { tempCursor ->
+                    if (tempCursor != null && tempCursor.moveToFirst()) {
+                        val idDonation = tempCursor.getInt(tempCursor.getColumnIndexOrThrow("id_donation"))
+                        val title = tempCursor.getString(tempCursor.getColumnIndexOrThrow("title"))
+                        val idOng = tempCursor.getInt(tempCursor.getColumnIndexOrThrow("id_ong"))
+
+                        val insertedVolunteering = Donation(idDonation, title, idOng)
+                        return insertedVolunteering
+                    }
+                }
+            }
+            null
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("Voltorn", "Error editing volunteering: ${e.message}")
+            null
+        } finally {
+            database?.close()
+        }
+    }
+
+    @Throws(SQLException::class)
+    fun DeleteDonation(donation: Donation): Boolean {
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+        try {
+            val deleteQuery = "DELETE FROM donations WHERE id_donation = ${donation.id_donation}"
+            database.execSQL(deleteQuery)
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("Voltorn", "Error deleting donation: ${e.message}")
+        } finally {
+            database?.close()
+        }
+        return false
     }
 }
