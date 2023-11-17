@@ -42,7 +42,11 @@ class EditProfile : Fragment() {
                 .commit()
         }
         binding.btnSaveChanges.setOnClickListener {
-            Toast.makeText(context, "Testing: Has editado tu cuenta", Toast.LENGTH_SHORT).show()
+            editUser()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.upper_fragment, UserProfile())
+                .addToBackStack(null)
+                .commit()
         }
         binding.btnDeleteAccount.setOnClickListener {
             parentFragmentManager.beginTransaction()
@@ -61,6 +65,7 @@ class EditProfile : Fragment() {
             binding.tvAskForCollaborator.visibility = View.VISIBLE
             binding.btnAskForCollaborator.visibility = View.VISIBLE
             binding.btnAskForCollaborator.setOnClickListener {
+                newCollaborator()
                 Toast.makeText(context, "Testing: Has solicitado ser colaborador", Toast.LENGTH_SHORT).show()
             }
         }
@@ -92,14 +97,51 @@ class EditProfile : Fragment() {
         }
     }
 
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            EditProfile().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
+    private fun editUser(){
+        currentUser?.email = binding.etEmail.text.toString()
+        currentUser?.first_name = binding.etFirstName.text.toString()
+        currentUser?.last_name = binding.etLastName.text.toString()
+        currentUser?.phone = binding.etPhone.text.toString()
+        currentUser?.password = binding.etPassword.text.toString()
+
+        var auxUser = db?.EditUser(currentUser!!)
+        if(auxUser != null){
+            Toast.makeText(context, "Usuario ${currentUser?.first_name} ${currentUser?.last_name} editado", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun newCollaborator() {
+        if(currentUser != null){
+            try {
+                currentUser?.collaborator = true
+                db?.EditUser(currentUser!!)
+
+                val ongName = "Nombre de ONG"
+                val ongDescription = "Descripción de la ong"
+                val ongAddress = "Dirección de la ong"
+                val ongEmail = currentUser?.email
+                val ongIdUser = currentUser?.id_user
+
+                val query = """
+                INSERT INTO ongs (name, description, address, email, id_user)
+                VALUES ('$ongName', '$ongDescription', '$ongAddress', '$ongEmail', $ongIdUser)
+            """.trimIndent()
+
+                val rowsAffected = db?.FireQueryWithRowsAffected(query)
+
+                if (rowsAffected != -1L) {
+                    Toast.makeText(context, "Ya eres colaborador", Toast.LENGTH_SHORT).show()
+                    sessionManager.removeOng()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.upper_fragment, Map())
+                        .addToBackStack(null)
+                        .commit()
+                } else {
+                    Toast.makeText(context, "Hubo un error", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.d("Voltorn", "Error: ${e.message}", e)
+            }
+        }
+    }
 }

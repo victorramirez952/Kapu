@@ -38,7 +38,7 @@ class EditOngDesc : Fragment() {
                 .commit()
         }
         binding.btnSaveChanges.setOnClickListener {
-            Toast.makeText(context, "Testing: Has editado la descripción de la ong", Toast.LENGTH_SHORT).show()
+            editOngDesc()
             parentFragmentManager.beginTransaction()
                 .replace(R.id.upper_fragment, Donations())
                 .addToBackStack(null)
@@ -69,6 +69,30 @@ class EditOngDesc : Fragment() {
             }
         } catch (e:Exception){
             Log.d("Voltorn", "Error: ${e.message}")
+        }
+    }
+
+    private fun editOngDesc() {
+        if (currentOng != null) {
+            val description = binding.etDescription.text.toString().trim()
+            currentOng?.description = description
+
+            try {
+                val query = "UPDATE ongs SET description = '$description' WHERE id_ong = ${currentOng?.id_ong}"
+                val rowsAffected = db?.FireQueryWithRowsAffected(query)
+
+                if (rowsAffected != -1L) {
+                    Toast.makeText(context, "Ong ${currentOng?.name} editada", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.upper_fragment, Donations())
+                        .addToBackStack(null)
+                        .commit()
+                } else {
+                    Toast.makeText(context, "Error editando la descripcion de la ong", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.d("Voltorn", "Error: ${e.message}", e)
+            }
         }
     }
 }

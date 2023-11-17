@@ -94,51 +94,48 @@ class Donations : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val manager = LinearLayoutManager(requireContext())
-        val decoration = DividerItemDecoration(requireContext(), manager.orientation)
-        binding.rvDonations.layoutManager = LinearLayoutManager(requireContext())
-        try {
-            val query = "SELECT * FROM donations WHERE id_ong=${currentOng?.id_ong}"
-            db?.FireQuery(query)?.use {
-                if (it.count > 0) {
-                    val donationList = mutableListOf<Donation>()
-                    do {
-                        var id_donation = it.getInt(it.getColumnIndexOrThrow("id_donation"))
-                        var title = it.getString(it.getColumnIndexOrThrow("title"))
-                        // var imagen = it.getString(it.getColumnIndexOrThrow("image"))
-                        var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
+        if(currentOng != null){
+            val manager = LinearLayoutManager(requireContext())
+            val decoration = DividerItemDecoration(requireContext(), manager.orientation)
+            binding.rvDonations.layoutManager = LinearLayoutManager(requireContext())
+            try {
+                val query = "SELECT * FROM donations WHERE id_ong=${currentOng?.id_ong}"
+                db?.FireQuery(query)?.use {
+                    if (it.count > 0) {
+                        val donationList = mutableListOf<Donation>()
+                        do {
+                            var id_donation = it.getInt(it.getColumnIndexOrThrow("id_donation"))
+                            var title = it.getString(it.getColumnIndexOrThrow("title"))
+                            // var imagen = it.getString(it.getColumnIndexOrThrow("image"))
+                            var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
 
-                        var donation = Donation(id_donation, title, id_ong)
-                        donationList.add(donation)
+                            var donation = Donation(id_donation, title, id_ong)
+                            donationList.add(donation)
 
-                    } while (it.moveToNext())
-                    val donationAdapter = DonationAdapter(donationList,
-                        currentUser,
-                        onItemSelected = { donation -> onItemSelected(donation) },
-                        onEditItem = { donation -> onEditItem(donation) },
-                        onDeleteItem = { donation -> onDeleteItem(donation) }
-                    )
-                    Log.d("Voltorn", "Exito when donationAdapter")
-                    binding.rvDonations.adapter = donationAdapter
+                        } while (it.moveToNext())
+                        val donationAdapter = DonationAdapter(donationList,
+                            currentUser,
+                            onItemSelected = { donation -> onItemSelected(donation) },
+                            onEditItem = { donation -> onEditItem(donation) },
+                            onDeleteItem = { donation -> onDeleteItem(donation) }
+                        )
+                        Log.d("Voltorn", "Exito when donationAdapter")
+                        binding.rvDonations.adapter = donationAdapter
+                    }
                 }
+            } catch (e: Exception) {
+                Log.d("Error", "Error: ${e.message}", e)
             }
-        } catch (e: Exception) {
-            Log.d("Error", "Error: ${e.message}", e)
+            binding.rvDonations.addItemDecoration(decoration)
         }
-        binding.rvDonations.addItemDecoration(decoration)
     }
 
     private fun getOng() {
         try {
             currentOng = db?.GetOng(sessionManager.getOngId())
-            if (currentOng == null) {
-                Toast.makeText(
-                    context,
-                    "Un error en informacion buscada, parece haber",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
+            if (currentOng != null) {
                 binding.tvNameOng.text = currentOng?.name
+                binding.tvDescription.text = currentOng?.description
             }
         } catch (e: Exception) {
             Log.d("Voltorn", "Error: ${e.message}")
@@ -159,7 +156,6 @@ class Donations : Fragment() {
             .replace(R.id.upper_fragment, editDonationFragment)
             .addToBackStack(null)
             .commit()
-//        Toast.makeText(requireContext(), "Editando ${donation.title}", Toast.LENGTH_SHORT).show()
     }
 
     fun onDeleteItem(donation: Donation) {

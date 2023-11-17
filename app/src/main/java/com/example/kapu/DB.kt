@@ -18,11 +18,12 @@ class DB(private val context: Context) {
     fun openDatabase(): SQLiteDatabase {
         val dbFile = context.getDatabasePath(DB_NAME)
         copyDatabase(dbFile)
-        return SQLiteDatabase.openDatabase(dbFile.path, null, SQLiteDatabase.OPEN_READWRITE)
+        val db = SQLiteDatabase.openDatabase(dbFile.path, null, SQLiteDatabase.OPEN_READWRITE)
+        db.execSQL("PRAGMA foreign_keys = ON;")
+        return db
     }
 
     private fun copyDatabase(dbFile: File) {
-        Log.d("Voltorn", "Copying new db")
         val dbPath = context.getDatabasePath(DB_NAME).absolutePath
         if (!File(dbPath).exists()) {
             try {
@@ -43,22 +44,44 @@ class DB(private val context: Context) {
     }
 
     @Throws(SQLException::class)
-    fun FireQuery(query:String): Cursor? {
-        var TempCursor: Cursor? = null
+    fun FireQuery(query: String): Cursor? {
         val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
-        try {
-            TempCursor = database.rawQuery(query, null)
-            if(TempCursor != null && TempCursor.count > 0){
-                if(TempCursor.moveToFirst()) return TempCursor
+
+        return try {
+            val tempCursor = database.rawQuery(query, null)
+            if (tempCursor != null && tempCursor.count > 0) {
+                if (tempCursor.moveToFirst()) {
+                    tempCursor
+                } else {
+                    null
+                }
+            } else {
+                tempCursor?.close()
+                null
             }
-        } catch (e:Exception){
+        } catch (e: Exception) {
             Log.d("Voltorn", "Error: ${e.message}", e)
             e.printStackTrace()
-            TempCursor?.close()
+            null
         } finally {
-            database?.close()
+            database.close()
         }
-        return null
+    }
+
+    @Throws(SQLException::class)
+    fun FireQueryWithRowsAffected(query: String): Long {
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+        return try {
+            val statement = database.compileStatement(query)
+            val rowsAffected = statement.executeUpdateDelete()
+            rowsAffected.toLong()
+        } catch (e: Exception) {
+            Log.d("Voltorn", "Error: ${e.message}", e)
+            e.printStackTrace()
+            -1L
+        } finally {
+            database.close()
+        }
     }
 
     @Throws(SQLException::class)
@@ -207,6 +230,9 @@ class DB(private val context: Context) {
         val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
 
         try {
+            val deleteOngQuery = "DELETE FROM ongs WHERE id_user = ${user.id_user}"
+            database.execSQL(deleteOngQuery)
+
             val deleteQuery = "DELETE FROM users WHERE id_user = ${user.id_user}"
             database.execSQL(deleteQuery)
             return true

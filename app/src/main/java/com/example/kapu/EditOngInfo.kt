@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.kapu.databinding.FragmentEditOngDescBinding
 import com.example.kapu.databinding.FragmentEditOngInfoBinding
 
 class EditOngInfo : Fragment() {
@@ -37,7 +36,7 @@ class EditOngInfo : Fragment() {
                 .commit()
         }
         binding.btnSaveChanges.setOnClickListener {
-            Toast.makeText(context, "Testing: Has editado la info de la ong", Toast.LENGTH_SHORT).show()
+            editOngInfo()
             parentFragmentManager.beginTransaction()
                 .replace(R.id.upper_fragment, Volunteering())
                 .addToBackStack(null)
@@ -72,14 +71,32 @@ class EditOngInfo : Fragment() {
         }
     }
 
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            EditOngInfo().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
+    private fun editOngInfo() {
+        if (currentOng != null) {
+            val name = binding.etTitle.text.toString().trim()
+            val phone = binding.etPhone.text.toString().trim()
+            val email = binding.etEmail.text.toString().trim()
+            val address = binding.etAddress.text.toString().trim()
+            currentOng?.phone = phone
+            currentOng?.email = email
+            currentOng?.address = address
+
+            try {
+                val query = "UPDATE ongs SET name = '$name',  phone = '$phone', email = '$email', address = '$address' WHERE id_ong = ${currentOng?.id_ong}"
+
+                val rowsAffected = db?.FireQueryWithRowsAffected(query)
+                if (rowsAffected != -1L) {
+                    Toast.makeText(context, "Ong ${currentOng?.name} editada", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.upper_fragment, Donations())
+                        .addToBackStack(null)
+                        .commit()
+                } else {
+                    Toast.makeText(context, "Error editando la ong", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.d("Voltorn", "Error: ${e.message}", e)
+            }
+        }
+    }
 }

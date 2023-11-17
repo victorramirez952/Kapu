@@ -64,7 +64,7 @@ class Map : Fragment() {
                 startActivity(intent)
                 requireActivity().finish()
             } else {
-                var currentUser = db?.GetUser(sessionManager.getUserEmail())
+                currentUser = db?.GetUser(sessionManager.getUserEmail())
                 if(currentUser != null){
                     val fullName = currentUser?.first_name + " " + currentUser?.last_name
                     binding.tvHomeTesting.text = "Welcome, $fullName"
@@ -78,38 +78,50 @@ class Map : Fragment() {
 
     }
 
-    private fun initRecyclerView(){
-        val manager = LinearLayoutManager(requireContext())
-        val decoration = DividerItemDecoration(requireContext(), manager.orientation)
-        binding.rvOngs.layoutManager = LinearLayoutManager(requireContext())
-        try {
-            val query = "SELECT * FROM ongs"
-            db?.FireQuery(query)?.use {
-                if (it.count > 0) {
-                    val ongList = mutableListOf<Ong>()
-                    do {
-                        var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
-                        var name = it.getString(it.getColumnIndexOrThrow("name"))
-                        var description = it.getString(it.getColumnIndexOrThrow("description"))
-                        var address = it.getString(it.getColumnIndexOrThrow("address"))
-                        var phone = it.getString(it.getColumnIndexOrThrow("phone"))
-                        var email = it.getString(it.getColumnIndexOrThrow("email"))
-                        var id_user = it.getInt(it.getColumnIndexOrThrow("id_user"))
+    private fun initRecyclerView() {
+        if (currentUser != null) {
+            val manager = LinearLayoutManager(requireContext())
+            val decoration = DividerItemDecoration(requireContext(), manager.orientation)
+            binding.rvOngs.layoutManager = LinearLayoutManager(requireContext())
 
-                        var ong = Ong(id_ong, name, description, address, phone, email, id_user)
-                        ongList.add(ong)
-
-                    } while (it.moveToNext())
-                    val ongAdapter = OngAdapter(ongList,
-                        onItemSelected = { ong -> onItemSelected(ong) }
-                    )
-                    binding.rvOngs.adapter = ongAdapter
+            try {
+                val query = if (currentUser?.collaborator == true) {
+                    "SELECT * FROM ongs WHERE id_user = ${currentUser?.id_user}"
+                } else {
+                    "SELECT * FROM ongs"
                 }
+                Log.d("Voltorn", "CurrentUser: ${currentUser}")
+                Log.d("Voltorn", "query: $query")
+
+                db?.FireQuery(query)?.use {
+                    if (it.count > 0) {
+                        val ongList = mutableListOf<Ong>()
+                        do {
+                            var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
+                            var name = it.getString(it.getColumnIndexOrThrow("name"))
+                            var description = it.getString(it.getColumnIndexOrThrow("description"))
+                            var address = it.getString(it.getColumnIndexOrThrow("address"))
+                            var phone = it.getString(it.getColumnIndexOrThrow("phone"))
+                            var email = it.getString(it.getColumnIndexOrThrow("email"))
+                            var id_user = it.getInt(it.getColumnIndexOrThrow("id_user"))
+
+                            var ong = Ong(id_ong, name, description, address, phone, email, id_user)
+                            ongList.add(ong)
+                        } while (it.moveToNext())
+
+                        val ongAdapter = OngAdapter(
+                            ongList,
+                            onItemSelected = { ong -> onItemSelected(ong) }
+                        )
+                        binding.rvOngs.adapter = ongAdapter
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d("Voltorn", "Error: ${e.message}", e)
             }
-        } catch (e:Exception){
-            Log.d("Voltorn", "Error: ${e.message}", e)
+
+            binding.rvOngs.addItemDecoration(decoration)
         }
-        binding.rvOngs.addItemDecoration(decoration)
     }
 
     fun onItemSelected(ong: Ong){

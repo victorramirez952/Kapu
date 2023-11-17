@@ -100,13 +100,7 @@ class Volunteering : Fragment() {
     private fun getOng(){
         try {
             currentOng = db?.GetOng(sessionManager.getOngId())
-            if(currentOng == null) {
-                Toast.makeText(
-                    context,
-                    "Un error en informacion buscada, parece haber",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
+            if(currentOng != null) {
                 binding.tvNameOng.text = currentOng?.name
                 binding.tv2OngPhone.text = currentOng?.phone
                 binding.tv2OngEmail.text = currentOng?.email
@@ -118,45 +112,47 @@ class Volunteering : Fragment() {
     }
 
     private fun initRecyclerView(){
-        val manager = LinearLayoutManager(requireContext())
-        val decoration = DividerItemDecoration(requireContext(), manager.orientation)
-        binding.rvVolunteering.layoutManager = LinearLayoutManager(requireContext())
-        try {
-            val query = "SELECT * FROM volunteering WHERE id_ong=${currentOng?.id_ong}"
-            db?.FireQuery(query)?.use {
-                if (it.count > 0) {
-                    var weekdaysString: String
-                    val weekdaysList = mutableListOf<String>()
-                    val volunteeringList = mutableListOf<VolunteeringClass>()
-                    do {
-                        var id_volunteering = it.getInt(it.getColumnIndexOrThrow("id_volunteering"))
-                        var title = it.getString(it.getColumnIndexOrThrow("title"))
-                        var startDate = it.getString(it.getColumnIndexOrThrow("startDate"))
-                        var endDate = it.getString(it.getColumnIndexOrThrow("endDate"))
-                        var startTime = it.getString(it.getColumnIndexOrThrow("startTime"))
-                        var endTime = it.getString(it.getColumnIndexOrThrow("endTime"))
-                        var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
-                        val weekdaysString = getWeekdaysString(id_volunteering)
-                        weekdaysList.add(weekdaysString)
+        if(currentOng != null){
+            val manager = LinearLayoutManager(requireContext())
+            val decoration = DividerItemDecoration(requireContext(), manager.orientation)
+            binding.rvVolunteering.layoutManager = LinearLayoutManager(requireContext())
+            try {
+                val query = "SELECT * FROM volunteering WHERE id_ong=${currentOng?.id_ong}"
+                db?.FireQuery(query)?.use {
+                    if (it.count > 0) {
+                        var weekdaysString: String
+                        val weekdaysList = mutableListOf<String>()
+                        val volunteeringList = mutableListOf<VolunteeringClass>()
+                        do {
+                            var id_volunteering = it.getInt(it.getColumnIndexOrThrow("id_volunteering"))
+                            var title = it.getString(it.getColumnIndexOrThrow("title"))
+                            var startDate = it.getString(it.getColumnIndexOrThrow("startDate"))
+                            var endDate = it.getString(it.getColumnIndexOrThrow("endDate"))
+                            var startTime = it.getString(it.getColumnIndexOrThrow("startTime"))
+                            var endTime = it.getString(it.getColumnIndexOrThrow("endTime"))
+                            var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
+                            val weekdaysString = getWeekdaysString(id_volunteering)
+                            weekdaysList.add(weekdaysString)
 
-                        var volunteering = VolunteeringClass(id_volunteering, title, startDate, endDate, startTime, endTime, id_ong)
-                        volunteeringList.add(volunteering)
+                            var volunteering = VolunteeringClass(id_volunteering, title, startDate, endDate, startTime, endTime, id_ong)
+                            volunteeringList.add(volunteering)
 
-                    } while (it.moveToNext())
-                    val volunteeringAdapter = VolunteeringAdapter(volunteeringList,
-                        currentUser,
-                        onItemSelected = { volunteering -> onItemSelected(volunteering) },
-                        onEditItem = { volunteering -> onEditItem(volunteering) },
-                        onDeleteItem = { volunteering -> onDeleteItem(volunteering) },
-                        weekdaysList
-                    )
-                    binding.rvVolunteering.adapter = volunteeringAdapter
+                        } while (it.moveToNext())
+                        val volunteeringAdapter = VolunteeringAdapter(volunteeringList,
+                            currentUser,
+                            onItemSelected = { volunteering -> onItemSelected(volunteering) },
+                            onEditItem = { volunteering -> onEditItem(volunteering) },
+                            onDeleteItem = { volunteering -> onDeleteItem(volunteering) },
+                            weekdaysList
+                        )
+                        binding.rvVolunteering.adapter = volunteeringAdapter
+                    }
                 }
+            } catch (e:Exception){
+                Log.d("Error", "Error: ${e.message}", e)
             }
-        } catch (e:Exception){
-            Log.d("Error", "Error: ${e.message}", e)
+            binding.rvVolunteering.addItemDecoration(decoration)
         }
-        binding.rvVolunteering.addItemDecoration(decoration)
     }
 
     private fun getWeekdaysString(idVolunteering: Int): String {

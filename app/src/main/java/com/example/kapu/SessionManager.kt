@@ -43,4 +43,9 @@ class SessionManager(context: Context?) {
     fun getOngId(): Int? {
         return pref?.getInt(ONG_NAME, 0)
     }
+
+    fun removeOng() {
+        editor?.remove(ONG_NAME)
+        editor?.apply()
+    }
 }
