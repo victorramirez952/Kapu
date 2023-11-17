@@ -112,6 +112,7 @@ class Volunteering : Fragment() {
     }
 
     private fun initRecyclerView(){
+        binding.rvVolunteering.adapter = null
         if(currentOng != null){
             val manager = LinearLayoutManager(requireContext())
             val decoration = DividerItemDecoration(requireContext(), manager.orientation)
@@ -143,6 +144,7 @@ class Volunteering : Fragment() {
                             onItemSelected = { volunteering -> onItemSelected(volunteering) },
                             onEditItem = { volunteering -> onEditItem(volunteering) },
                             onDeleteItem = { volunteering -> onDeleteItem(volunteering) },
+                            onParcipateItem = { volunteering -> onParcipateItem(volunteering) },
                             weekdaysList
                         )
                         binding.rvVolunteering.adapter = volunteeringAdapter
@@ -201,6 +203,19 @@ class Volunteering : Fragment() {
             initRecyclerView()
         } else {
             Toast.makeText(context, "No se pudo eliminar el usuario", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun onParcipateItem(volunteering: VolunteeringClass) {
+        if (currentUser != null) {
+            val result = db?.insertUserVolunteering(currentUser!!.id_user, volunteering.id_volunteering)
+
+            if (result != null && result > 0) {
+                Toast.makeText(context, "Guardado", Toast.LENGTH_SHORT).show()
+                initRecyclerView()
+            } else {
+                Toast.makeText(context, "No se pudo agregar", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

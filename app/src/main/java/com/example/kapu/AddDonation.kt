@@ -75,7 +75,7 @@ class AddDonation : Fragment() {
             try {
                 val auxDonation = db?.AddDonation(donation)
                 if(auxDonation != null) {
-                    Toast.makeText(context, "Voluntariado: ${auxDonation.title} agregado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Donativo: ${auxDonation.title} agregado", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "No se pudo editar los datos", Toast.LENGTH_SHORT).show()
                 }

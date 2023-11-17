@@ -18,7 +18,8 @@ class VolunteeringViewHolder(
     private val view: View,
     private val onItemSelected: (VolunteeringClass) -> Unit,
     private val onEditItem: (VolunteeringClass) -> Unit,
-    private val onDeleteItem: (VolunteeringClass) -> Unit
+    private val onDeleteItem: (VolunteeringClass) -> Unit,
+    private val onParticipateItem: (VolunteeringClass) -> Unit
 ):RecyclerView.ViewHolder(view) {
     val binding = VolunteeringLayoutBinding.bind(view)
     fun render(volunteeringModel: VolunteeringClass, currentUser: User?, weekdaysString: String, onItemSelected: (VolunteeringClass) -> Unit) {
@@ -41,6 +42,9 @@ class VolunteeringViewHolder(
         }
         binding.btnDelete.setOnClickListener {
             onDeleteItem(volunteeringModel)
+        }
+        binding.btnParticipate.setOnClickListener {
+            onParticipateItem(volunteeringModel)
         }
     }
 }

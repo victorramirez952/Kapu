@@ -94,6 +94,7 @@ class Donations : Fragment() {
     }
 
     private fun initRecyclerView() {
+        binding.rvDonations.adapter = null
         if(currentOng != null){
             val manager = LinearLayoutManager(requireContext())
             val decoration = DividerItemDecoration(requireContext(), manager.orientation)
@@ -119,7 +120,6 @@ class Donations : Fragment() {
                             onEditItem = { donation -> onEditItem(donation) },
                             onDeleteItem = { donation -> onDeleteItem(donation) }
                         )
-                        Log.d("Voltorn", "Exito when donationAdapter")
                         binding.rvDonations.adapter = donationAdapter
                     }
                 }
@@ -161,10 +161,10 @@ class Donations : Fragment() {
     fun onDeleteItem(donation: Donation) {
         var result = db?.DeleteDonation(donation)
         if(result != null){
-            Toast.makeText(context, "Volunteering ${donation.title} eliminado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Donativo: ${donation.title} eliminado", Toast.LENGTH_SHORT).show()
             initRecyclerView()
         } else {
-            Toast.makeText(context, "No se pudo eliminar el usuario", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "No se pudo eliminar el donativo", Toast.LENGTH_SHORT).show()
         }
     }
 }

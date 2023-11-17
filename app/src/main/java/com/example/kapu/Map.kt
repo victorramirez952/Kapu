@@ -79,6 +79,7 @@ class Map : Fragment() {
     }
 
     private fun initRecyclerView() {
+        binding.rvOngs.adapter = null
         if (currentUser != null) {
             val manager = LinearLayoutManager(requireContext())
             val decoration = DividerItemDecoration(requireContext(), manager.orientation)

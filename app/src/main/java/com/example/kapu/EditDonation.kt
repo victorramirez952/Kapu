@@ -43,7 +43,6 @@ class EditDonation : Fragment() {
                 .commit()
         }
         binding.btnSaveChanges.setOnClickListener {
-            Toast.makeText(context, "Testing: Has editado la info del donativo", Toast.LENGTH_SHORT).show()
             editDonation()
             parentFragmentManager.beginTransaction()
                 .replace(R.id.upper_fragment, Donations())

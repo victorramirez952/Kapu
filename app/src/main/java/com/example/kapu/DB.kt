@@ -561,4 +561,35 @@ class DB(private val context: Context) {
         }
         return false
     }
+
+    // Inside the DB class
+    @Throws(SQLException::class)
+    fun insertUserVolunteering(userId: Int, volunteeringId: Int): Long {
+        val database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null)
+
+        return try {
+            // Insert into user_volunteering table
+            val insertQuery = "INSERT INTO user_volunteering (id_user, id_volunteering) VALUES ($userId, $volunteeringId)"
+            database.execSQL(insertQuery)
+
+            // Retrieve the last inserted row ID
+            val maxQuery = "SELECT last_insert_rowid()"
+            val cursor = database.rawQuery(maxQuery, null)
+
+            val lastInsertId = if (cursor.moveToFirst()) {
+                cursor.getLong(0)
+            } else {
+                -1
+            }
+
+            cursor.close()
+            lastInsertId
+        } catch (e: Exception) {
+            Log.d("Voltorn", "Error: ${e.message}", e)
+            e.printStackTrace()
+            -1
+        } finally {
+            database.close()
+        }
+    }
 }

@@ -23,6 +23,7 @@ class UsersView : AppCompatActivity() {
     }
 
     private fun initRecyclerView(){
+        binding.rvUsers.adapter = null
         val manager = LinearLayoutManager(this)
         val decoration = DividerItemDecoration(this, manager.orientation)
         binding.rvUsers.layoutManager = LinearLayoutManager(this)
