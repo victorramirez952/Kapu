@@ -1,11 +1,13 @@
 package com.example.kapu.adapter
 
 import android.content.DialogInterface.OnClickListener
+import android.graphics.BitmapFactory
 import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.kapu.Donation
 import com.example.kapu.Ong
 import com.example.kapu.User
@@ -33,6 +35,10 @@ class DonationViewHolder(
         }
         binding.btnDeleteDonation.setOnClickListener {
             onDeleteItem(donationModel)
+        }
+        donationModel.image?.let { imgByteArray ->
+            val bitmap = BitmapFactory.decodeByteArray(imgByteArray, 0, imgByteArray.size)
+            binding.ivDonation.setImageBitmap(bitmap)
         }
     }
 }

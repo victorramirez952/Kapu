@@ -107,10 +107,10 @@ class Donations : Fragment() {
                         do {
                             var id_donation = it.getInt(it.getColumnIndexOrThrow("id_donation"))
                             var title = it.getString(it.getColumnIndexOrThrow("title"))
-                            // var imagen = it.getString(it.getColumnIndexOrThrow("image"))
+                             var image = it.getBlob(it.getColumnIndexOrThrow("image"))
                             var id_ong = it.getInt(it.getColumnIndexOrThrow("id_ong"))
 
-                            var donation = Donation(id_donation, title, id_ong)
+                            var donation = Donation(id_donation, title, image, id_ong)
                             donationList.add(donation)
 
                         } while (it.moveToNext())

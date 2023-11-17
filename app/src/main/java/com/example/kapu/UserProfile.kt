@@ -86,12 +86,10 @@ class UserProfile : Fragment() {
                 }
 
                 if(currentUser?.collaborator == false){
-                    Log.d("Voltorn", "User: ${currentUser?.last_name} and ${currentUser?.collaborator}")
                     binding.tvMyParticipations.visibility = View.VISIBLE
                     binding.rvMyParticipations.visibility = View.VISIBLE
                     initRecyclerView()
                 } else {
-                    Log.d("Voltorn", "User: ${currentUser?.last_name} and ${currentUser?.collaborator}")
                     binding.tvMyParticipations.visibility = View.GONE
                     binding.rvMyParticipations.visibility = View.GONE
                 }
@@ -104,7 +102,6 @@ class UserProfile : Fragment() {
     private fun initRecyclerView() {
         binding.rvMyParticipations.adapter = null
         if (currentUser != null && currentUser?.collaborator == false) {
-            Log.d("Voltorn", "Getting initRecyclerView")
             val manager = LinearLayoutManager(requireContext())
             val decoration = DividerItemDecoration(requireContext(), manager.orientation)
             binding.rvMyParticipations.layoutManager = LinearLayoutManager(requireContext())
@@ -159,7 +156,7 @@ class UserProfile : Fragment() {
                     Toast.makeText(context, "Eliminado", Toast.LENGTH_SHORT).show()
                     initRecyclerView()
                 } else {
-                    Toast.makeText(context, "No se pudo eliminar el volunteering", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "No se pudo eliminar el voluntariado", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.d("Error", "Error: ${e.message}", e)

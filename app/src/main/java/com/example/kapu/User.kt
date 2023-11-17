@@ -12,6 +12,6 @@ data class User(
     var first_name: String,
     var last_name: String,
     var phone: String?,
-    var collaborator: Boolean
-    // val img_profile: String?,
+    var collaborator: Boolean,
+    var img_profile: ByteArray? = null
 )

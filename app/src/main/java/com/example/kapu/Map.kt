@@ -91,9 +91,6 @@ class Map : Fragment() {
                 } else {
                     "SELECT * FROM ongs"
                 }
-                Log.d("Voltorn", "CurrentUser: ${currentUser}")
-                Log.d("Voltorn", "query: $query")
-
                 db?.FireQuery(query)?.use {
                     if (it.count > 0) {
                         val ongList = mutableListOf<Ong>()

@@ -30,7 +30,7 @@ class SignUp : AppCompatActivity() {
             first_name = binding.etSignupFirstName.text.toString().trim()
             last_name = binding.etSignupLastName.text.toString().trim()
             phone = binding.etSignupPhone.text.toString().trim()
-            if(email.isEmpty() || password.isEmpty() || first_name.isEmpty() || last_name.isEmpty() || phone.isEmpty() || !phone.matches("\\d+".toRegex())){
+            if(email.isEmpty() || !isValidEmail(email) || password.isEmpty() || first_name.isEmpty() || last_name.isEmpty() || phone.isEmpty() || !phone.matches("\\d+".toRegex())){
                 Toast.makeText(this, "Ingresa correctamente los datos", Toast.LENGTH_SHORT).show()
             } else {
                 val user = db?.InsertUser(email, password, first_name, last_name, phone)
@@ -48,6 +48,10 @@ class SignUp : AppCompatActivity() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
+    }
+
+    fun isValidEmail(email: CharSequence): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     override fun onStart() {

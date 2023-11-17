@@ -1,7 +1,12 @@
 package com.example.kapu
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,14 +14,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatImageView
+import com.bumptech.glide.Glide
 import com.example.kapu.databinding.FragmentEditProfileBinding
 import com.example.kapu.databinding.FragmentUserProfileBinding
+import java.io.ByteArrayOutputStream
 
 class EditProfile : Fragment() {
     private lateinit var binding: FragmentEditProfileBinding
     private lateinit var sessionManager: SessionManager
     private var db:DB? = null
     private var currentUser: User? = null
+    private var isImageLoaded = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,6 +44,7 @@ class EditProfile : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         sessionManager = SessionManager(context)
+
         db = DB(requireContext())
         binding.btnCancel.setOnClickListener {
             parentFragmentManager.beginTransaction()
@@ -55,7 +66,6 @@ class EditProfile : Fragment() {
                 .commit()
         }
         checkLogin()
-        Log.d("Voltorn", "User logged: ${currentUser}")
         if(currentUser?.collaborator == true){
             binding.llAskForCollaborator.visibility = View.GONE
             binding.tvAskForCollaborator.visibility = View.GONE
@@ -66,7 +76,6 @@ class EditProfile : Fragment() {
             binding.btnAskForCollaborator.visibility = View.VISIBLE
             binding.btnAskForCollaborator.setOnClickListener {
                 newCollaborator()
-                Toast.makeText(context, "Testing: Has solicitado ser colaborador", Toast.LENGTH_SHORT).show()
             }
         }
         return binding.root
@@ -88,6 +97,17 @@ class EditProfile : Fragment() {
                     binding.etLastName.text = Editable.Factory.getInstance().newEditable(currentUser?.last_name)
                     binding.etPhone.text = Editable.Factory.getInstance().newEditable(currentUser?.phone ?: "")
                     binding.etPassword.text = Editable.Factory.getInstance().newEditable(currentUser?.password)
+                    if (currentUser?.img_profile != null && !isImageLoaded) {
+                        currentUser?.img_profile?.let { imgByteArray ->
+                            val bitmap = BitmapFactory.decodeByteArray(imgByteArray, 0, imgByteArray.size)
+                            binding.ivUserProfile.setImageBitmap(bitmap)
+                        }
+                        isImageLoaded = true
+                    }
+                    binding.ivUserProfile.setOnClickListener{
+                        val pickImg = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+                        changeImage.launch(pickImg)
+                    }
                 } else{
                     Toast.makeText(context, "Hubo un error en la busqueda de informacion", Toast.LENGTH_SHORT).show()
                 }
@@ -98,15 +118,16 @@ class EditProfile : Fragment() {
     }
 
     private fun editUser(){
-        currentUser?.email = binding.etEmail.text.toString()
-        currentUser?.first_name = binding.etFirstName.text.toString()
-        currentUser?.last_name = binding.etLastName.text.toString()
-        currentUser?.phone = binding.etPhone.text.toString()
-        currentUser?.password = binding.etPassword.text.toString()
-
-        var auxUser = db?.EditUser(currentUser!!)
-        if(auxUser != null){
-            Toast.makeText(context, "Usuario ${currentUser?.first_name} ${currentUser?.last_name} editado", Toast.LENGTH_SHORT).show()
+        if(currentUser != null){
+            currentUser?.email = binding.etEmail.text.toString()
+            currentUser?.first_name = binding.etFirstName.text.toString()
+            currentUser?.last_name = binding.etLastName.text.toString()
+            currentUser?.phone = binding.etPhone.text.toString()
+            currentUser?.password = binding.etPassword.text.toString()
+            var auxUser = db?.EditUser(currentUser!!)
+            if(auxUser != null){
+                Toast.makeText(context, "Usuario ${currentUser?.first_name} ${currentUser?.last_name} editado", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -143,5 +164,24 @@ class EditProfile : Fragment() {
                 Log.d("Voltorn", "Error: ${e.message}", e)
             }
         }
+    }
+
+    private val changeImage =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data = it.data
+                val imgUri = data?.data
+                binding.ivUserProfile.setImageURI(imgUri)
+
+                val bitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, imgUri)
+                val stream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                val imageInByte = stream.toByteArray()
+
+                currentUser?.img_profile = imageInByte
+                isImageLoaded = true
+            }
     }
 }

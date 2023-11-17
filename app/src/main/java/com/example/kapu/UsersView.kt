@@ -39,10 +39,10 @@ class UsersView : AppCompatActivity() {
                         var firstName = it.getString(it.getColumnIndexOrThrow("first_name"))
                         var lastName = it.getString(it.getColumnIndexOrThrow("last_name"))
                         var phone = it.getString(it.getColumnIndexOrThrow("phone"))
-                        Log.d("Voltorn", "Boolean for ${email} is: ${it.getInt(it.getColumnIndexOrThrow("collaborator")) == 1}")
+                        var img_profile = it.getBlob(it.getColumnIndexOrThrow("img_profile"))
                         var collaborator = it.getInt(it.getColumnIndexOrThrow("collaborator")) == 1
 
-                        var user = User(id, email, password, firstName, lastName, phone, collaborator)
+                        var user = User(id, email, password, firstName, lastName, phone, collaborator, img_profile)
                         userList.add(user)
 
                     } while (it.moveToNext())

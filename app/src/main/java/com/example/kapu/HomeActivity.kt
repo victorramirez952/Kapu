@@ -50,9 +50,8 @@ class HomeActivity : AppCompatActivity() {
             currentUser = db?.GetUser(sessionManager.getUserEmail())
             if(currentUser != null){
                 val fullName = currentUser?.first_name + " " + currentUser?.last_name
-//                binding.tvHomeTesting.text = "Welcome, $fullName"
             } else{
-                Toast.makeText(this, "Hubo un error en la busqueda de informacion", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Hubo un error en la búsqueda de informacion", Toast.LENGTH_SHORT).show()
             }
         }
     }

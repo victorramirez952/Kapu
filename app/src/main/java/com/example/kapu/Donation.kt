@@ -8,6 +8,6 @@ data class Donation(
     @PrimaryKey(autoGenerate = true)
     var id_donation: Int,
     var title: String,
-    // var image: String,
+    var image: ByteArray? = null,
     var id_ong: Int
 )

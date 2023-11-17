@@ -44,7 +44,6 @@ class EditOngDesc : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-         Log.d("Voltorn", "Ong id: ${sessionManager.getOngId()}")
         return binding.root
     }
 
@@ -55,8 +54,6 @@ class EditOngDesc : Fragment() {
     private fun getOng(){
         try {
             currentOng = db?.GetOng(sessionManager.getOngId())
-
-            Log.d("Voltorn", "Current ong: ${currentOng}")
             if(currentOng == null) {
                 Toast.makeText(
                     context,

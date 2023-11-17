@@ -135,7 +135,6 @@ class EditVolunteering : Fragment() {
         super.onStart()
         arguments?.let {
             current_id_volunteering = it.getInt("id_volunteering", 0)
-            Log.d("Voltorn", "Id volunteering editVolunteering: ${current_id_volunteering}")
             getVolunteering()
         }
         getVolunteering()

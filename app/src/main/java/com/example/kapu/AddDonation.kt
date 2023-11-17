@@ -1,6 +1,11 @@
 package com.example.kapu
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,8 +13,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.kapu.databinding.FragmentAddDonationBinding
 import com.example.kapu.databinding.FragmentEditOngDescBinding
+import java.io.ByteArrayOutputStream
 
 class AddDonation : Fragment() {
     private lateinit var binding: FragmentAddDonationBinding
@@ -43,6 +50,10 @@ class AddDonation : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+        binding.ivDonation.setOnClickListener{
+            val pickImg = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            changeImage.launch(pickImg)
+        }
         return binding.root
     }
 
@@ -69,9 +80,15 @@ class AddDonation : Fragment() {
     private fun addDonation(){
         if(currentOng != null){
             val title = binding.etDonation.text.toString().trim()
-            // val image = binding.ivDonation.text.toString().trim()
-            val id_ong = currentOng?.id_ong
-            val donation = Donation(0, title, currentOng!!.id_ong)
+            if(title.isEmpty()){
+                Toast.makeText(context, "Llene todos los campos", Toast.LENGTH_SHORT).show()
+                return
+            }
+            val bitmap = (binding.ivDonation.drawable as? BitmapDrawable)?.bitmap
+            val stream = ByteArrayOutputStream()
+            bitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            val imageInByte = stream.toByteArray()
+            val donation = Donation(0, title, imageInByte, currentOng!!.id_ong)
             try {
                 val auxDonation = db?.AddDonation(donation)
                 if(auxDonation != null) {
@@ -82,6 +99,22 @@ class AddDonation : Fragment() {
             } catch (e:Exception){
                 Log.d("Voltorn", "Error: ${e.message}", e)
             }
+        }
+    }
+
+    private val changeImage =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data = it.data
+                val imgUri = data?.data
+                binding.ivDonation.setImageURI(imgUri)
+
+                // Convert the image to a byte array (BLOB)
+                val bitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, imgUri)
+                val stream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         }
     }
 }

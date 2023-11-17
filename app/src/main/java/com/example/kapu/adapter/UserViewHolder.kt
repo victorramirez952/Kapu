@@ -1,11 +1,13 @@
 package com.example.kapu.adapter
 
 import android.content.DialogInterface.OnClickListener
+import android.graphics.BitmapFactory
 import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.kapu.User
 import com.example.kapu.databinding.UserLayoutBinding
 
@@ -22,8 +24,10 @@ class UserViewHolder(
         binding.tvUserLastName.setText(userModel.last_name)
         binding.tvUserPhone.setText(userModel.phone)
         binding.cbCollaborator.isChecked = userModel.collaborator
-        // Glide.with(binding.ivUser.context).load(userModel.img_profile).into(binding.ivUser)
-        // itemView.setOnClickListener{ onClickListener(userModel) }
+        if(userModel?.img_profile != null){
+            val bitmap = BitmapFactory.decodeByteArray(userModel.img_profile, 0, userModel.img_profile!!.size)
+            binding.ivUser.setImageBitmap(bitmap)
+        }
 
         binding.btnEdit.setOnClickListener {
             val email = binding.tvUserEmail.text.toString().trim()

@@ -199,7 +199,7 @@ class Volunteering : Fragment() {
     fun onDeleteItem(volunteering: VolunteeringClass) {
         var result = db?.DeleteVolunteering(volunteering)
         if(result != null){
-            Toast.makeText(context, "Volunteering ${volunteering.title} eliminado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Voluntariado: ${volunteering.title} eliminado", Toast.LENGTH_SHORT).show()
             initRecyclerView()
         } else {
             Toast.makeText(context, "No se pudo eliminar el usuario", Toast.LENGTH_SHORT).show()
