@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".Donations">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/ll_header_kapu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,17 +20,19 @@
             android:text="Kapu"
             android:textSize="20dp"
             android:gravity="center"
+            android:layout_gravity="center"
         />
 
         <Button
             android:id="@+id/btn_go2_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ir al mapa"
+            android:text="Home"
             android:gravity="center"
+            android:layout_gravity="right|center"
         />
 
-    </LinearLayout>
+    </FrameLayout>
 
 
 
@@ -43,7 +45,7 @@
             android:id="@+id/tv_name_ong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Caninos AC"
+            android:text=""
             android:textSize="20dp"
             android:gravity="center"
             android:layout_gravity="center"

@@ -39,21 +39,6 @@ class Map : Fragment() {
         binding = FragmentMapBinding.inflate(inflater, container, false)
         sessionManager = SessionManager(context)
         db = DB(requireContext())
-        binding.btnLogout.setOnClickListener {
-            try {
-                sessionManager.removeData()
-                val intent = Intent(context, Login::class.java)
-                startActivity(intent)
-                requireActivity().finish()
-            } catch (e:Exception){
-                Log.d("Voltorn", "Error: ${e.message}")
-            }
-
-        }
-        binding.btnHomeGoUsers.setOnClickListener {
-            val intent = Intent(context, UsersView::class.java)
-            startActivity(intent)
-        }
         return binding.root
     }
 
@@ -67,7 +52,7 @@ class Map : Fragment() {
                 currentUser = db?.GetUser(sessionManager.getUserEmail())
                 if(currentUser != null){
                     val fullName = currentUser?.first_name + " " + currentUser?.last_name
-                    binding.tvHomeTesting.text = "Welcome, $fullName"
+                    binding.tvHomeTesting.text = "Bienvenido, $fullName"
                 } else{
                     Toast.makeText(context, "Hubo un error en la busqueda de informacion", Toast.LENGTH_SHORT).show()
                 }

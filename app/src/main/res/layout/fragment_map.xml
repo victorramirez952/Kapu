@@ -17,32 +17,6 @@
     />
 
     <TextView
-        android:id="@+id/tv_map_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Buscar"
-        android:textSize="20dp"
-        android:gravity="left"
-    />
-
-    <EditText
-        android:id="@+id/et_map_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Animales"
-    />
-
-    <TextView
-        android:id="@+id/tv_home_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Home Activity"
-        android:textSize="20dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
-
-    <TextView
         android:id="@+id/tv_home_testing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,29 +24,6 @@
         android:textSize="20dp"
         android:layout_gravity="center"
         android:gravity="center"
-        />
-
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        />
-
-    <TextView
-        android:id="@+id/tv_home_see_users"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:gravity="center"
-        android:text="Ver usuarios"
-        />
-
-    <Button
-        android:id="@+id/btn_home_go_users"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Usuarios"
         />
 
     <androidx.recyclerview.widget.RecyclerView
