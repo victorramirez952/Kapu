@@ -12,6 +12,7 @@
         android:layout_gravity="center"
         android:gravity="left|center"
         android:paddingLeft="20dp"
+        android:textColor="@color/colorText"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

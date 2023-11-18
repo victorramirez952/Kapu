@@ -4,88 +4,136 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".SignUp">
 
     <TextView
         android:id="@+id/tv_signup_header"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Signup"
-        android:textSize="20dp"
+        android:text="Registro"
+        android:textSize="24sp"
+        android:textColor="@color/colorText"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/ll_signup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="64dp"
         />
 
     <LinearLayout
         android:id="@+id/ll_signup"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/tv_with_account"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_signup_header"
+        android:layout_marginTop="32dp"
         >
 
         <EditText
             android:id="@+id/et_signup_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="Correo electrónico"
+            android:inputType="textEmailAddress"
+            android:backgroundTint="@color/colorEditText"
+            android:textColorHint="@color/colorText"
+            android:textColor="@color/colorText"
+            android:layout_marginBottom="20dp"
             />
 
         <EditText
             android:id="@+id/et_signup_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:backgroundTint="@color/colorEditText"
+            android:textColorHint="@color/colorText"
+            android:textColor="@color/colorText"
+            android:layout_marginBottom="20dp"
             />
 
+        <!-- Repite el estilo de los EditText para los campos de nombre y apellido -->
         <EditText
             android:id="@+id/et_signup_first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="First_name"
-        />
+            android:hint="Nombre"
+            android:inputType="textPersonName"
+            android:backgroundTint="@color/colorEditText"
+            android:textColorHint="@color/colorText"
+            android:textColor="@color/colorText"
+            android:layout_marginBottom="20dp"
+            />
 
         <EditText
             android:id="@+id/et_signup_last_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Last_name"
-        />
+            android:hint="Apellido"
+            android:inputType="textPersonName"
+            android:backgroundTint="@color/colorEditText"
+            android:textColorHint="@color/colorText"
+            android:textColor="@color/colorText"
+            android:layout_marginBottom="20dp"
+            />
 
         <EditText
             android:id="@+id/et_signup_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone"
-        />
+            android:hint="Teléfono"
+            android:inputType="phone"
+            android:backgroundTint="@color/colorEditText"
+            android:textColorHint="@color/colorText"
+            android:textColor="@color/colorText"
+            android:layout_marginBottom="20dp"
+            />
 
         <Button
             android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Registrar"
+            android:backgroundTint="@color/colorButton"
+            android:textColor="@color/colorText"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp"
             />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_with_account"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿Ya tienes una cuenta?"
+        android:text="¿Ya tienes una cuenta? Inicia sesión"
+        android:textColor="@color/colorText"
         android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_to_login"
-        app:layout_constraintTop_toBottomOf="@id/ll_signup"
+        android:layout_marginBottom="24dp"
         />
+
     <Button
         android:id="@+id/btn_to_login"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Ingresa con tu cuenta"
+        android:backgroundTint="@color/colorButton"
+        android:textColor="@color/colorText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_with_account"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

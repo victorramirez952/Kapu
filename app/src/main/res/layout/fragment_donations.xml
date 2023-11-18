@@ -4,102 +4,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBackground"
+    android:padding="16dp"
     tools:context=".Donations">
 
-    <FrameLayout
-        android:id="@+id/ll_header_kapu"
+    <TextView
+        android:id="@+id/tv_kapu_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Kapu"
+        android:textSize="24sp"
+        android:textColor="@color/colorText"
         android:gravity="center"
-        >
+        android:background="@drawable/header_background"
+        android:paddingVertical="16dp"/>
 
-        <TextView
-            android:id="@+id/tv_kapu_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kapu"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-        />
-
-        <Button
-            android:id="@+id/btn_go2_map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home"
-            android:gravity="center"
-            android:layout_gravity="right|center"
-        />
-
-    </FrameLayout>
-
-
-
-    <FrameLayout
+    <Button
+        android:id="@+id/btn_go2_map"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    >
+        android:text="Ir al home"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorButton"
+        android:paddingVertical="12dp"
+       />
 
-        <TextView
-            android:id="@+id/tv_name_ong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-        />
+    <TextView
+        android:id="@+id/tv_name_ong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="20sp"
+        android:textColor="@color/colorText"
+        android:gravity="center"
+        android:paddingVertical="12dp"/>
 
-        <Button
-            android:id="@+id/btn_edit_ong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Editar"
-            android:layout_gravity="right|center"
-        />
-
-    </FrameLayout>
+    <Button
+        android:id="@+id/btn_edit_ong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Editar"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorButton"
+        android:paddingVertical="12dp"
+      />
 
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description"
-        android:textSize="20dp"
+        android:text="Descripción"
+        android:textSize="16sp"
+        android:textColor="@color/colorText"
         android:gravity="center"
-    />
-
+        android:paddingVertical="8dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Donativos"
-        android:textSize="20dp"
+        android:textSize="20sp"
+        android:textColor="@color/colorText"
         android:gravity="center"
-    />
+        android:paddingVertical="16dp"/>
 
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_donations"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_donations"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_add_donation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:src="@drawable/ic_launcher_foreground"
-            android:contentDescription="Agregar"
-            android:layout_margin="16dp"
-        />
-
-    </FrameLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_donation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/anadir"
+        android:tint="@color/white"
+        android:backgroundTint="@color/colorButton"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"/>
 
 </LinearLayout>

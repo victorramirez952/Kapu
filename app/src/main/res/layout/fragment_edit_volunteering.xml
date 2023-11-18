@@ -4,43 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".AddVolunteering">
+        tools:context=".AddVolunteering"
+        android:gravity="center_horizontal">
 
         <TextView
             android:id="@+id/tv_kapu_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Kapu"
-            android:textSize="20dp"
+            android:textColor="@color/colorText"
+            android:textSize="24sp"
             android:gravity="center"
-            />
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"/>
 
         <TextView
             android:id="@+id/tv_edit_volunteering"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Editar voluntariado"
-            android:textSize="20dp"
+            android:textColor="@color/colorText"
+            android:textSize="20sp"
             android:gravity="center"
-            />
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"/>
 
-        <!--    Editar voluntariado -->
         <LinearLayout
             android:id="@+id/row_edit_volunteering"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="left"
             android:orientation="vertical"
             android:padding="10dp"
-            >
+            android:background="@drawable/edittext_background">
 
             <TextView
                 android:id="@+id/tv_volunteering"
@@ -58,21 +62,21 @@
                 android:ems="10"
                 android:hint="Voluntariado"
                 android:inputType="text"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@android:color/transparent" />
 
         </LinearLayout>
 
-        <!--    Editar fecha inicio -->
         <LinearLayout
             android:id="@+id/row_edit_start_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="left"
             android:orientation="vertical"
             android:padding="10dp"
-            >
+            android:background="@drawable/edittext_background">
 
             <TextView
                 android:id="@+id/tv_start_date"
@@ -90,21 +94,21 @@
                 android:ems="10"
                 android:hint="Fecha inicio"
                 android:inputType="date"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@android:color/transparent" />
 
         </LinearLayout>
 
-        <!--    Editar fecha inicio -->
         <LinearLayout
             android:id="@+id/row_editar_end_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="left"
             android:orientation="vertical"
             android:padding="10dp"
-            >
+            android:background="@drawable/edittext_background">
 
             <TextView
                 android:id="@+id/tv_end_date"
@@ -122,191 +126,91 @@
                 android:ems="10"
                 android:hint="Fecha fin"
                 android:inputType="date"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@android:color/transparent" />
 
         </LinearLayout>
 
-        <!--    Editar dias -->
         <LinearLayout
             android:id="@+id/row_edit_days"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="left"
             android:orientation="vertical"
             android:padding="10dp"
-            >
+            android:background="@drawable/edittext_background">
 
             <TextView
                 android:id="@+id/tv_days"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dias"
+                android:text="Días"
                 android:gravity="center"
                 />
 
-            <FrameLayout
-                android:layout_width="200dp"
+            <CheckBox
+                android:id="@+id/cb_monday"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
+                android:layout_gravity="left|center"
+                android:text="Lunes"/>
 
-                <CheckBox
-                    android:id="@+id/cb_monday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lunes"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
+            <CheckBox
+                android:id="@+id/cb_tuesday"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
+                android:layout_gravity="left|center"
+                android:text="Martes"/>
 
-                <CheckBox
-                    android:id="@+id/cb_tuesday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Martes"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
+            <CheckBox
+                android:id="@+id/cb_wednesday"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
+                android:layout_gravity="left|center"
+                android:text="Miércoles"/>
 
-                <CheckBox
-                    android:id="@+id/cb_wednesday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Miércoles"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
+            <CheckBox
+                android:id="@+id/cb_thursday"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
+                android:layout_gravity="left|center"
+                android:text="Jueves"/>
 
-                <CheckBox
-                    android:id="@+id/cb_thursday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Jueves"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
+            <CheckBox
+                android:id="@+id/cb_friday"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
+                android:layout_gravity="left|center"
+                android:text="Viernes"/>
 
-                <CheckBox
-                    android:id="@+id/cb_friday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Viernes"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
+            <CheckBox
+                android:id="@+id/cb_saturday"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
+                android:layout_gravity="left|center"
+                android:text="Sábado"/>
 
-                <CheckBox
-                    android:id="@+id/cb_saturday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sábado"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
+            <CheckBox
+                android:id="@+id/cb_sunday"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
-
-                <CheckBox
-                    android:id="@+id/cb_sunday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Domingo"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
+                android:layout_gravity="left|center"
+                android:text="Domingo"/>
 
         </LinearLayout>
 
-        <!--    Editar hora inicio -->
         <LinearLayout
             android:id="@+id/row_edit_start_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="left"
             android:orientation="vertical"
             android:padding="10dp"
-            >
+            android:background="@drawable/edittext_background">
 
             <TextView
                 android:id="@+id/tv_start_time"
@@ -323,23 +227,23 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="10::00"
+                android:hint="10:00"
                 android:inputType="text"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@android:color/transparent" />
 
         </LinearLayout>
 
-        <!--    Edit hora fin -->
         <LinearLayout
             android:id="@+id/row_edit_end_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="left"
             android:orientation="vertical"
             android:padding="10dp"
-            >
+            android:background="@drawable/edittext_background">
 
             <TextView
                 android:id="@+id/tv_end_time"
@@ -356,38 +260,34 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="10::00"
+                android:hint="10:00"
                 android:inputType="text"
                 android:minHeight="48dp"
-                />
+                android:background="@android:color/transparent" />
 
         </LinearLayout>
 
-        <!--        Botones cancelar o editar -->
         <LinearLayout
             android:id="@+id/ll_btns_edit_volunteering"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
             <Button
                 android:id="@+id/btn_cancel"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
                 android:text="Cancelar" />
 
             <Button
                 android:id="@+id/btn_edit"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
                 android:text="Guardar cambios" />
 
         </LinearLayout>
-
-
     </LinearLayout>
-
-
 </ScrollView>

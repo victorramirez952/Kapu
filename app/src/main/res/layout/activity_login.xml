@@ -4,70 +4,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".Login">
 
     <TextView
         android:id="@+id/tv_login_header"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Bienvenidos"
+        android:textSize="24sp"
+        android:textColor="@color/colorText"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="64dp"
+        />
+
+    <!-- Modificar los EditText para que coincidan con el estilo de la imagen -->
+    <EditText
+        android:id="@+id/et_login_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Correo electrónico"
+        android:inputType="textEmailAddress"
+        android:backgroundTint="@color/colorEditText"
+        android:textColorHint="@color/colorText"
+        android:textColor="@color/colorText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_header"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        />
+
+    <EditText
+        android:id="@+id/et_login_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:backgroundTint="@color/colorEditText"
+        android:textColorHint="@color/colorText"
+        android:textColor="@color/colorText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_login_email"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        />
+
+    <!-- Estilizar el botón de login para que coincida con la imagen -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:textSize="20dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/ll_login"
-        app:layout_constraintTop_toTopOf="parent"
-    />
+        android:backgroundTint="@color/colorButton"
+        android:textColor="@color/colorText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_login_password"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        />
 
-    <LinearLayout
-        android:id="@+id/ll_login"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_without_account"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/tv_without_account"
-        app:layout_constraintTop_toBottomOf="@id/tv_login_header"
-        android:padding="10dp"
-        >
-
-        <EditText
-            android:id="@+id/et_login_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:text="user1@example.com"
+        android:text="¿No tienes una cuenta? Regístrate"
+        android:textColor="@color/colorText"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/btnOmega"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"
         />
 
-        <EditText
-            android:id="@+id/et_login_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:text="password1"
-        />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ingresar"
-        />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_without_account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="¿No tienes una cuenta?"
-            android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@id/btnOmega"
-            app:layout_constraintTop_toBottomOf="@id/ll_login"
-        />
-        <Button
-            android:id="@+id/btnOmega"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Crea tu cuenta"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_without_account"
+    <Button
+        android:id="@+id/btnOmega"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Crea tu cuenta"
+        android:backgroundTint="@color/colorButton"
+        android:textColor="@color/colorText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

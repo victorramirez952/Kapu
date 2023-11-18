@@ -2,60 +2,69 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    android:padding="16dp"
+    android:background="@color/colorBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/iv_donation"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/chow"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_donation"
-    />
+        android:scaleType="centerCrop"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_donation"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:layout_constraintGuide_percent="0.3"
-    />
+        app:layout_constraintGuide_percent="0.3"/>
 
     <TextView
         android:id="@+id/tv_donation"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintStart_toEndOf="@id/guideline_donation"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ll_btns_donation"
         android:text="Titulo donación"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
         android:gravity="center"
-    />
+        android:background="@drawable/textview_background"/>
 
     <LinearLayout
         android:id="@+id/ll_btns_donation"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:gravity="center"
         app:layout_constraintStart_toEndOf="@id/tv_donation"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="visible"
-
-        >
+        android:visibility="visible">
 
         <Button
             android:id="@+id/btn_edit_donation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Editar"
-        />
+            android:backgroundTint="@color/colorButton"
+            android:textColor="@color/white"
+            android:layout_marginBottom="8dp"/>
 
         <Button
             android:id="@+id/btn_delete_donation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Eliminar"
-        />
-
+            android:backgroundTint="@color/colorButton"
+            android:textColor="@color/white"/>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

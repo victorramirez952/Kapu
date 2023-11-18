@@ -3,93 +3,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".EditOngDesc">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        >
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Kapu"
-            android:textSize="20dp"
+            android:textSize="24sp"
+            android:textColor="@color/colorText"
             android:gravity="center"
-            />
+            android:background="@drawable/header_background"
+            android:paddingVertical="16dp"/>
 
         <TextView
             android:id="@+id/tv_edit_donation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Editar donativo"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorText"
             android:gravity="center"
-            />
+            android:paddingVertical="12dp"/>
 
-
-        <!--    Editar email -->
-        <LinearLayout
-            android:id="@+id/row_edit_donation"
+        <TextView
+            android:id="@+id/tv_donation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:padding="10dp"
-            >
+            android:text="Donativo"
+            android:textSize="16sp"
+            android:textColor="@color/colorText"
+            android:gravity="center"
+            android:paddingVertical="8dp"/>
 
-            <TextView
-                android:id="@+id/tv_donation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Donativo"
-                android:gravity="center"
-                />
+        <EditText
+            android:id="@+id/et_donation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese el donativo"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"
+            android:inputType="text"/>
 
-            <EditText
-                android:id="@+id/et_donation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Donation"
-                android:inputType="text"
-                android:minHeight="48dp" />
-
-        </LinearLayout>
-
+        <!-- Donation Image View -->
         <ImageView
             android:id="@+id/iv_donation"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@color/black"
-            />
+            android:src="@drawable/image"
+           />
 
-        <!--        Botones cancelar o editar -->
         <LinearLayout
             android:id="@+id/ll_btns_edit_donation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingVertical="16dp">
 
             <Button
                 android:id="@+id/btn_cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Cancelar" />
+                android:text="Cancelar"
+                android:layout_weight="1"
+                android:textColor="@color/colorText"
+                android:backgroundTint="@color/colorButton"
+                android:paddingVertical="12dp"/>
 
             <Button
                 android:id="@+id/btn_save_changes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Guardar cambios" />
-
+                android:text="Guardar cambios"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorButton"
+                android:paddingVertical="12dp"/>
         </LinearLayout>
 
     </LinearLayout>

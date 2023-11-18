@@ -1,398 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@color/colorBackground"
+    tools:context=".AddVolunteering">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".AddVolunteering">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_kapu_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Kapu"
-            android:textSize="20dp"
+            android:textSize="24sp"
+            android:textColor="@color/colorText"
             android:gravity="center"
-            />
+            android:background="@drawable/header_background"
+            android:paddingVertical="16dp"/>
 
         <TextView
             android:id="@+id/tv_add_volunteering"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Agregar voluntariado"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorText"
             android:gravity="center"
-            />
+            android:paddingVertical="12dp"/>
 
-        <!--    Agregar voluntariado -->
-        <LinearLayout
-            android:id="@+id/row_add_volunteering"
+        <EditText
+            android:id="@+id/et_voluntariado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:padding="10dp"
+            android:hint="Nombre del voluntariado"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"/>
+
+        <EditText
+            android:id="@+id/et_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha inicio (YYYY-MM-DD)"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"/>
+
+        <EditText
+            android:id="@+id/et_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha fin (YYYY-MM-DD)"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"/>
+
+        <!-- Days checkboxes and labels -->
+        <!-- Include the CheckBox and TextView for each day as in the following example -->
+        <!-- Repeat for Monday, Tuesday, Wednesday, etc. -->
+
+
+
+
+        <FrameLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
             >
 
-            <TextView
-                android:id="@+id/tv_volunteering"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Voluntariado"
-                android:gravity="center"
-                />
-
-            <EditText
-                android:id="@+id/et_voluntariado"
+            <CheckBox
+                android:id="@+id/cb_monday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Voluntariado"
-                android:text="VoluntariadoXYZ"
-                android:inputType="text"
-                android:minHeight="48dp" />
+                android:textColor="@color/colorText"
+                android:text="Lunes"
+                android:padding="12dp"/>
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <!--    Agregar fecha inicio -->
-        <LinearLayout
-            android:id="@+id/row_add_start_date"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:padding="10dp"
             >
 
-            <TextView
-                android:id="@+id/tv_start_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fecha inicio"
-                android:gravity="center"
-                />
-
-            <EditText
-                android:id="@+id/et_start_date"
+            <CheckBox
+                android:id="@+id/cb_tuesday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Fecha inicio"
-                android:text="2023-08-12"
-                android:inputType="date"
-                android:minHeight="48dp" />
+                android:text="Martes"
+                android:textColor="@color/colorText"
+                android:padding="12dp"/>
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <!--    Agregar fecha inicio -->
-        <LinearLayout
-            android:id="@+id/row_add_end_date"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:padding="10dp"
             >
 
-            <TextView
-                android:id="@+id/tv_end_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fecha fin"
-                android:gravity="center"
-                />
-
-            <EditText
-                android:id="@+id/et_end_date"
+            <CheckBox
+                android:id="@+id/cb_wednesday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Fecha fin"
-                android:text="2023-12-12"
-                android:inputType="date"
-                android:minHeight="48dp" />
+                android:textColor="@color/colorText"
+                android:text="Miercoles"
+                android:padding="12dp"/>
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <!--    Agregar dias -->
-        <LinearLayout
-            android:id="@+id/row_add_days"
-            android:layout_width="match_parent"
+
+        <FrameLayout
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:padding="10dp"
             >
 
-            <TextView
-                android:id="@+id/tv_days"
-                android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/cb_thursday"
+                android:layout_width="match_parent"
+                android:textColor="@color/colorText"
                 android:layout_height="wrap_content"
-                android:text="Dias"
-                android:gravity="center"
-                />
+                android:text="Jueves"
+                android:padding="12dp"/>
 
-            <FrameLayout
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                >
+        </FrameLayout>
 
-                <CheckBox
-                    android:id="@+id/cb_monday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lunes"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                >
-
-                <CheckBox
-                    android:id="@+id/cb_tuesday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Martes"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                >
-
-                <CheckBox
-                    android:id="@+id/cb_wednesday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Miércoles"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                >
-
-                <CheckBox
-                    android:id="@+id/cb_thursday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Jueves"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                >
-
-                <CheckBox
-                    android:id="@+id/cb_friday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Viernes"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                >
-
-                <CheckBox
-                    android:id="@+id/cb_saturday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sábado"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                >
-
-                <CheckBox
-                    android:id="@+id/cb_sunday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Domingo"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-
-        </LinearLayout>
-
-        <!--    Agregar hora inicio -->
-        <LinearLayout
-            android:id="@+id/row_add_start_time"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:padding="10dp"
             >
 
-            <TextView
-                android:id="@+id/tv_start_time"
-                android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/cb_friday"
+                android:layout_width="match_parent"
+                android:textColor="@color/colorText"
                 android:layout_height="wrap_content"
-                android:text="Hora inicio"
-                android:inputType="time"
-                android:gravity="center"
-                />
+                android:text="Viernes"
+                android:padding="12dp"/>
 
-            <EditText
-                android:id="@+id/et_start_time"
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            >
+
+            <CheckBox
+                android:id="@+id/cb_saturday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="10::00"
-                android:text="08:00"
-                android:inputType="text"
-                android:minHeight="48dp" />
+                android:textColor="@color/colorText"
+                android:text="Sabado"
+                android:padding="12dp"/>
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <!--    Agregar hora fin -->
-        <LinearLayout
-            android:id="@+id/row_add_end_time"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:padding="10dp"
             >
 
-            <TextView
-                android:id="@+id/tv_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hora fin"
-                android:inputType="time"
-                android:gravity="center"
-                />
-
-            <EditText
-                android:id="@+id/et_end_time"
+            <CheckBox
+                android:id="@+id/cb_sunday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="10::00"
-                android:text="09:00"
-                android:inputType="text"
-                android:minHeight="48dp"
-                />
+                android:textColor="@color/colorText"
+                android:text="Domingo"
+                android:padding="12dp"/>
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <!--        Botones cancelar o editar -->
+
+
+        <!-- Time input fields -->
+        <EditText
+            android:id="@+id/et_start_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Hora inicio (HH:MM)"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"/>
+
+        <EditText
+            android:id="@+id/et_end_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Hora fin (HH:MM)"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"/>
+
+        <!-- Buttons for Cancel and Add -->
         <LinearLayout
             android:id="@+id/ll_btns_add_volunteering"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingVertical="16dp">
 
             <Button
                 android:id="@+id/btn_cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Cancelar" />
+                android:text="Cancelar"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/colorButton"
+                android:paddingVertical="12dp"/>
 
             <Button
                 android:id="@+id/btn_add"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Agregar" />
-
+                android:text="Agregar"
+                android:layout_weight="1"
+                android:textColor="@color/colorText"
+                android:backgroundTint="@color/black"
+                android:paddingVertical="12dp"/>
         </LinearLayout>
-
-
     </LinearLayout>
-
-
 </ScrollView>

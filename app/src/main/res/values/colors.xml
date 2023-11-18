@@ -4,4 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#15BD26</color>
     <color name="red">#BD154B</color>
+    <color name="colorBackground">#4CAF50</color>
+    <color name="colorText">#FFFFFF</color>
+    <color name="colorEditText">#64DD17</color>
+    <color name="colorButton">#388E3C</color>
 </resources>

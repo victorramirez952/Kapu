@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.33"
         android:orientation="vertical"
-        android:background="@color/black"
+        android:background="@color/colorButton"
         >
 
         <ImageView
@@ -37,7 +37,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.33"
         android:orientation="vertical"
-        android:background="@color/black"
+        android:background="@color/colorButton"
         >
 
         <ImageView
@@ -62,7 +62,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.33"
         android:orientation="vertical"
-        android:background="@color/black"
+        android:background="@color/colorButton"
         >
 
         <ImageView
